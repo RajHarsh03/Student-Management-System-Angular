@@ -1,0 +1,54 @@
+<div class="login-wrapper">
+  <div class="login-card">
+
+    <h2 class="login-title">Student Management System</h2>
+    <p class="login-subtitle">Sign in to your account</p>
+
+    <div class="error-banner" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          placeholder="Enter your username"
+          [class.invalid]="username.invalid && username.touched"
+        />
+        <span class="error-text" *ngIf="username.invalid && username.touched">
+          Username is required.
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password"
+          [class.invalid]="password.invalid && password.touched"
+        />
+        <span class="error-text" *ngIf="password.invalid && password.touched">
+          <span *ngIf="password.hasError('required')">Password is required.</span>
+          <span *ngIf="password.hasError('minlength')">Password must be at least 6 characters.</span>
+        </span>
+      </div>
+
+      <button type="submit" class="btn-login" [disabled]="loginForm.invalid">
+        Login
+      </button>
+
+    </form>
+
+    <div class="demo-hint">
+      <p><strong>Admin:</strong> admin / admin123</p>
+      <p><strong>Student:</strong> student / student123</p>
+    </div>
+
+  </div>
+</div>
