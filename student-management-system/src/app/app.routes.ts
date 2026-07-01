@@ -3,7 +3,10 @@ import { Component } from '@angular/core';
 import { AuthGuard } from './auth/auth.guard';
 
 @Component({ standalone: true, template: '' })
-class DashboardPlaceholderComponent {}
+class AdminDashboardPlaceholder {}
+
+@Component({ standalone: true, template: '' })
+class StudentDashboardPlaceholder {}
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -13,8 +16,13 @@ export const routes: Routes = [
       import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
-    path: 'dashboard',
-    component: DashboardPlaceholderComponent,
+    path: 'admin-dashboard',
+    component: AdminDashboardPlaceholder,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'student-dashboard',
+    component: StudentDashboardPlaceholder,
     canActivate: [AuthGuard]
   },
   { path: '**', redirectTo: 'login' }

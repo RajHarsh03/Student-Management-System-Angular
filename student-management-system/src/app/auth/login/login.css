@@ -3,8 +3,6 @@
   min-height: 100dvh;
 }
 
-/* ── Page background ──────────────────────────────────────── */
-
 .page {
   position: relative;
   min-height: 100dvh;
@@ -15,8 +13,6 @@
   padding: 2rem 1.5rem;
   overflow-x: hidden;
 }
-
-/* ── Cyan geometric accent ────────────────────────────────── */
 
 .cyan-accent {
   position: fixed;
@@ -29,8 +25,6 @@
   z-index: 0;
 }
 
-/* ── Main inner panel ─────────────────────────────────────── */
-
 .main-panel {
   position: relative;
   z-index: 1;
@@ -38,7 +32,6 @@
   border-radius: 18px;
   width: 100%;
   max-width: 920px;
-  min-height: 460px;
   display: flex;
   align-items: center;
   padding: 3rem 3.5rem;
@@ -46,20 +39,12 @@
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
 }
 
-/* ── Brand section ────────────────────────────────────────── */
-
 .brand-section {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-}
-
-.brand-block {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
 }
 
 .brand-text {
@@ -91,10 +76,7 @@
   color: #4a5568;
   line-height: 1.75;
   max-width: 300px;
-  margin-top: 0.25rem;
 }
-
-/* ── Form section ─────────────────────────────────────────── */
 
 .form-section {
   flex: 1;
@@ -104,7 +86,12 @@
   flex-direction: column;
 }
 
-/* ── Error banner ─────────────────────────────────────────── */
+.form-mode-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0d2248;
+  margin-bottom: 1.25rem;
+}
 
 .error-banner {
   background: #fef2f2;
@@ -116,8 +103,6 @@
   margin-bottom: 1rem;
   line-height: 1.4;
 }
-
-/* ── Fields ───────────────────────────────────────────────── */
 
 .field {
   margin-bottom: 0.875rem;
@@ -134,7 +119,7 @@
 .field input {
   display: block;
   width: 100%;
-  height: 52px;
+  height: 42px;
   padding: 0 1rem;
   font-size: 0.9375rem;
   font-family: inherit;
@@ -175,6 +160,40 @@
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
 }
 
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrap input {
+  width: 100%;
+  padding-right: 2.75rem;
+}
+
+.eye-btn {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #80868b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 150ms;
+}
+
+.eye-btn:hover {
+  color: #3c4043;
+}
+
+.eye-btn:focus-visible {
+  outline: 2px solid #17c3d4;
+  border-radius: 3px;
+}
+
 .field-error {
   display: block;
   font-size: 0.8rem;
@@ -184,12 +203,10 @@
   line-height: 1.4;
 }
 
-/* ── Login button ─────────────────────────────────────────── */
-
 .btn-login {
   display: block;
   width: 100%;
-  height: 42px;
+  height: 36px;
   font-size: 0.9rem;
   font-family: inherit;
   font-weight: 600;
@@ -225,8 +242,6 @@
   cursor: not-allowed;
 }
 
-/* ── Admin login toggle ───────────────────────────────────── */
-
 .admin-login-toggle {
   background: none;
   border: none;
@@ -250,8 +265,6 @@
   outline-offset: 2px;
   border-radius: 3px;
 }
-
-/* ── Demo access ──────────────────────────────────────────── */
 
 .demo-access {
   margin-top: 0.75rem;
@@ -304,8 +317,6 @@
   line-height: 1.5;
 }
 
-/* ── Reduced motion ───────────────────────────────────────── */
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     transition: none !important;
@@ -313,68 +324,22 @@
   }
 }
 
-/* ── Tablet (≤ 900px) ─────────────────────────────────────── */
-
 @media (max-width: 900px) {
-  .cyan-accent {
-    width: 220px;
-  }
-
-  .main-panel {
-    padding: 2.5rem 2rem;
-    gap: 2rem;
-  }
-
-  .brand-tagline {
-    display: none;
-  }
+  .cyan-accent { width: 220px; }
+  .main-panel { padding: 2.5rem 2rem; gap: 2rem; }
+  .brand-tagline { display: none; }
 }
-
-/* ── Hide brand, single column below 700px ────────────────── */
 
 @media (max-width: 700px) {
-  .cyan-accent {
-    display: none;
-  }
-
-  .page {
-    background: #dde8f0;
-    align-items: flex-start;
-    padding: 1.5rem 1.25rem;
-  }
-
-  .main-panel {
-    flex-direction: column;
-    align-items: flex-start;
-    min-height: unset;
-    padding: 2rem 1.5rem;
-    gap: 1.5rem;
-    border-radius: 12px;
-  }
-
-  .brand-section {
-    width: 100%;
-  }
-
-  .form-section {
-    max-width: 100%;
-    width: 100%;
-  }
+  .cyan-accent { display: none; }
+  .page { align-items: flex-start; padding: 1.5rem 1.25rem; }
+  .main-panel { flex-direction: column; align-items: flex-start; min-height: unset; padding: 2rem 1.5rem; gap: 1.5rem; border-radius: 12px; }
+  .brand-section { width: 100%; }
+  .form-section { max-width: 100%; width: 100%; }
 }
 
-/* ── Mobile (≤ 480px) ─────────────────────────────────────── */
-
 @media (max-width: 480px) {
-  .page {
-    padding: 1.25rem;
-  }
-
-  .main-panel {
-    padding: 1.5rem 1.25rem;
-    border-radius: 10px;
-  }
-
-  .brand-section {
-    display: none;
-  }
+  .page { padding: 1.25rem; }
+  .main-panel { padding: 1.5rem 1.25rem; border-radius: 10px; }
+  .brand-section { display: none; }
 }
