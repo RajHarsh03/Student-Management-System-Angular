@@ -1,54 +1,82 @@
-<div class="login-wrapper">
-  <div class="login-card">
+<div class="page">
 
-    <h2 class="login-title">Student Management System</h2>
-    <p class="login-subtitle">Sign in to your account</p>
+  <!-- Cyan geometric accent on the left edge -->
+  <div class="cyan-accent"></div>
 
-    <div class="error-banner" *ngIf="errorMessage">
-      {{ errorMessage }}
+  <!-- Large inner panel sitting over the accent -->
+  <div class="main-panel">
+
+    <!-- Left branding section -->
+    <div class="brand-section">
+      <div class="brand-block">
+        <div class="brand-text">
+          <p class="brand-title">STUDENT MANAGEMENT</p>
+          <p class="brand-subtitle">SYSTEM</p>
+        </div>
+      </div>
+      <p class="brand-tagline">A centralized platform for managing student records, courses, and academic progress.</p>
     </div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+    <!-- Right form section -->
+    <div class="form-section">
 
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input
-          id="username"
-          type="text"
-          formControlName="username"
-          placeholder="Enter your username"
-          [class.invalid]="username.invalid && username.touched"
-        />
-        <span class="error-text" *ngIf="username.invalid && username.touched">
-          Username is required.
-        </span>
+      <div class="error-banner" *ngIf="errorMessage">
+        {{ errorMessage }}
       </div>
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          formControlName="password"
-          placeholder="Enter your password"
-          [class.invalid]="password.invalid && password.touched"
-        />
-        <span class="error-text" *ngIf="password.invalid && password.touched">
-          <span *ngIf="password.hasError('required')">Password is required.</span>
-          <span *ngIf="password.hasError('minlength')">Password must be at least 6 characters.</span>
-        </span>
-      </div>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
 
-      <button type="submit" class="btn-login" [disabled]="loginForm.invalid">
-        Login
+        <div class="field">
+          <label for="username">Username</label>
+          <input
+            id="username"
+            type="text"
+            formControlName="username"
+            placeholder="Enter your username"
+            [class.input-error]="username.invalid && username.touched"
+          />
+          <span class="field-error" *ngIf="username.invalid && username.touched">
+            Username is required.
+          </span>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            placeholder="Enter your password"
+            [class.input-error]="password.invalid && password.touched"
+          />
+          <span class="field-error" *ngIf="password.invalid && password.touched">
+            <span *ngIf="password.hasError('required')">Password is required.</span>
+            <span *ngIf="password.hasError('minlength')">Minimum 6 characters required.</span>
+          </span>
+        </div>
+
+        <button type="submit" class="btn-login" [disabled]="loginForm.invalid">
+          Login
+        </button>
+
+      </form>
+
+      <button type="button" class="admin-login-toggle">
+        Login as Admin?
       </button>
 
-    </form>
+      <div class="demo-access">
+        <p class="demo-label">Demo access</p>
+        <div class="demo-row">
+          <span class="demo-badge admin">Admin</span>
+          <span class="demo-creds">admin / admin123</span>
+        </div>
+        <div class="demo-row">
+          <span class="demo-badge student">Student</span>
+          <span class="demo-creds">student / student123</span>
+        </div>
+      </div>
 
-    <div class="demo-hint">
-      <p><strong>Admin:</strong> admin / admin123</p>
-      <p><strong>Student:</strong> student / student123</p>
     </div>
-
   </div>
 </div>
