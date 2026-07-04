@@ -1,0 +1,87 @@
+<div class="dashboard-container">
+  <aside class="sidebar">
+    <div class="logo-area">
+      <h2>EduPortal Admin</h2>
+    </div>
+    <nav class="nav-links">
+      <a href="#" class="active-link">Admin Console</a>
+      <a href="#">Manage Students</a>
+      <a href="#">Manage Faculty</a>
+      <a href="#">System Logs</a>
+      <a href="#">Settings</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="top-header">
+      <div class="search-box">
+        <input type="text" placeholder="Search student by ID, name, or department...">
+      </div>
+      <div class="profile-info">
+        <span class="system-status">System Status: <strong style="color: #2ecc71;">Online</strong></span>
+        <span class="user-name">{{ adminName }} ({{ adminRole }})</span>
+      </div>
+    </header>
+
+    <div class="dashboard-grid">
+      
+      <section class="welcome-banner">
+        <h1>System Control Panel Portal 🛠️</h1>
+        <p>Total Active Student Sessions: {{ activeSessions }}. No critical system alerts pending.</p>
+      </section>
+
+      <section class="card quick-actions">
+        <h3>Quick Controls</h3>
+        <div class="action-buttons">
+          <button class="btn-add">+ Register New Student</button>
+          <button class="btn-notice">📢 Post System Notice</button>
+          <button class="btn-report">📄 Generate Enrollment Report</button>
+        </div>
+      </section>
+
+      <section class="card metric-card">
+        <h3>Total Enrolled Students</h3>
+        <div class="metric-display">
+          <span class="metric-number">{{ totalStudentsCount }}</span>
+          <p>Global Campus Limit: 5,000</p>
+        </div>
+      </section>
+
+      <section class="card student-management-card">
+        <h3>Live Student Record Editor (ID: {{ mockStudentId }})</h3>
+        <div class="editor-fields">
+          <p><strong>Full Name:</strong> {{ mockStudentName }}</p>
+          <p><strong>Department:</strong> {{ mockStudentDept }}</p>
+          <p><strong>Academic Status:</strong> {{ mockStudentStatus }}</p>
+          <div class="editor-actions">
+            <button class="btn-edit">✏️ Edit Details</button>
+            <button class="btn-delete">🗑️ Delete Student</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card verification-card">
+        <h3>Pending Document Approvals</h3>
+        <ul class="task-list">
+          <li>
+            <span><strong>{{ approvalTask1 }}</strong></span>
+            <button class="btn-mini-approve">Approve</button>
+          </li>
+          <li>
+            <span><strong>{{ approvalTask2 }}</strong></span>
+            <button class="btn-mini-approve">Approve</button>
+          </li>
+        </ul>
+      </section>
+
+      <section class="card system-log-card">
+        <h3>Latest Administrator Audit Log</h3>
+        <div class="log-item">
+          <h5>{{ logTimestamp }}</h5>
+          <p>{{ logActionMessage }}</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>

@@ -1,0 +1,265 @@
+/* General Layout Setup */
+.dashboard-container {
+  display: flex;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f9;
+  min-height: 100vh;
+  margin: 0;
+  color: #333;
+}
+
+/* Purple Left Sidebar */
+.sidebar {
+  width: 240px;
+  background-color: #5D3EBC; /* Modern Purple */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.logo-area h2 {
+  margin-top: 10px;
+  margin-bottom: 40px;
+  font-size: 24px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.nav-links a {
+  color: #e0d7ff;
+  text-decoration: none;
+  padding: 12px 15px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.nav-links a:hover, .nav-links .active-link {
+  background-color: #4A2E9D;
+  color: white;
+  font-weight: bold;
+}
+
+/* Main Content and Top Header */
+.main-content {
+  flex-1: 1;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 240px);
+}
+
+.top-header {
+  background-color: white;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.search-box input {
+  width: 300px;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.bell-icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.user-name {
+  font-weight: 600;
+}
+
+/* Dashboard Content Grid */
+.dashboard-grid {
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+/* Common Card Styles (Clean shadows & rounded corners) */
+.card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #444;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 8px;
+  font-size: 18px;
+}
+
+/* Welcome Banner (Spans full width of the grid row) */
+.welcome-banner {
+  grid-column: span 3;
+  background: linear-gradient(135deg, #7A5CFF, #5D3EBC);
+  color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(93, 62, 188, 0.2);
+}
+
+.welcome-banner h1 {
+  margin: 0 0 10px 0;
+  font-size: 28px;
+}
+
+.welcome-banner p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* Quick Navigation */
+.nav-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav-buttons button {
+  background-color: #f0ebff;
+  color: #5D3EBC;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+}
+
+.nav-buttons button:hover {
+  background-color: #e0d7ff;
+}
+
+/* Attendance Summary */
+.attendance-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.stat-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 8px solid #5D3EBC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.percentage {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Course Card */
+.course-details h4 {
+  margin: 0 0 10px 0;
+  color: #5D3EBC;
+  font-size: 18px;
+}
+
+.course-details p {
+  margin: 5px 0;
+  color: #666;
+}
+
+/* To-Do List */
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todo-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.todo-list input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Notice Card */
+.notice-item {
+  background-color: #fff9e6;
+  border-left: 4px solid #ffcc00;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+.notice-item h5 {
+  margin: 0 0 5px 0;
+  font-size: 14px;
+  color: #b38f00;
+}
+
+.notice-item p {
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+}
+
+/* Responsive Rules */
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .welcome-banner {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .main-content {
+    width: 100%;
+  }
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    padding: 15px;
+  }
+  .welcome-banner {
+    grid-column: span 1;
+  }
+}

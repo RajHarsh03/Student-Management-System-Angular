@@ -1,0 +1,269 @@
+/* General Layout Setup */
+.dashboard-container {
+  display: flex;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  margin: 0;
+  color: #333;
+}
+
+/* Darker Midnight Purple for Admin Sidebar distinction */
+.sidebar {
+  width: 240px;
+  background-color: #3B2475; 
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.logo-area h2 {
+  margin-top: 10px;
+  margin-bottom: 40px;
+  font-size: 22px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.nav-links a {
+  color: #e6e0f8;
+  text-decoration: none;
+  padding: 12px 15px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.nav-links a:hover, .nav-links .active-link {
+  background-color: #271454;
+  color: white;
+  font-weight: bold;
+}
+
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 240px);
+}
+
+.top-header {
+  background-color: white;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.search-box input {
+  width: 320px;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.system-status {
+  font-size: 14px;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #3B2475;
+}
+
+/* Dashboard Grid Layout */
+.dashboard-grid {
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+/* Common Card Rules */
+.card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #444;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 8px;
+  font-size: 16px;
+}
+
+/* Welcome Admin Banner */
+.welcome-banner {
+  grid-column: span 3;
+  background: linear-gradient(135deg, #5131A6, #3B2475);
+  color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(59, 36, 117, 0.2);
+}
+
+.welcome-banner h1 {
+  margin: 0 0 10px 0;
+  font-size: 26px;
+}
+
+.welcome-banner p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* Administrative Quick Action Buttons */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.action-buttons button {
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: opacity 0.2s;
+}
+
+.btn-add { background-color: #e8f8f0; color: #1e7e34; }
+.btn-notice { background-color: #fff3cd; color: #856404; }
+.btn-report { background-color: #e2f0fd; color: #004085; }
+.action-buttons button:hover { opacity: 0.85; }
+
+/* Metric Card Display */
+.metric-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 0;
+}
+
+.metric-number {
+  font-size: 48px;
+  font-weight: bold;
+  color: #3B2475;
+}
+
+.metric-display p {
+  margin: 10px 0 0 0;
+  color: #777;
+  font-size: 14px;
+}
+
+/* Student Management Record Card */
+.editor-fields p {
+  margin: 8px 0;
+  font-size: 15px;
+}
+
+.editor-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.btn-edit {
+  background-color: #3B2475;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* Document Approval Lists */
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f5f5f5;
+  font-size: 14px;
+}
+
+.btn-mini-approve {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* System Log Layout */
+.log-item {
+  background-color: #f8f9fa;
+  border-left: 4px solid #6c757d;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+.log-item h5 {
+  margin: 0 0 5px 0;
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.log-item p {
+  margin: 0;
+  font-size: 13px;
+  color: #222;
+}
+
+/* Responsive Grid Configuration Rules */
+@media (max-width: 1024px) {
+  .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+  .welcome-banner { grid-column: span 2; }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container { flex-direction: column; }
+  .sidebar { width: 100%; box-sizing: border-box; }
+  .main-content { width: 100%; }
+  .dashboard-grid { grid-template-columns: 1fr; padding: 15px; }
+  .welcome-banner { grid-column: span 1; }
+}
