@@ -4,11 +4,10 @@ import { Component } from '@angular/core';
   selector: 'app-student-dashboard',
   standalone: true,
   imports: [],
-  templateUrl: './student-dashboard.html',
-  styleUrls: ['./student-dashboard.css']
+  templateUrl: './student-dashboard.html', /* Change this to match the folder's file name */
+  styleUrls: ['./student-dashboard.css']    /* Change this as well if needed */
 })
 export class StudentDashboard {
-  // Simple TypeScript variables for interpolation (Week 1-2 concepts)
   studentName: string = 'Ayush Prakash';
   totalAssignmentsDue: number = 3;
   attendancePercentage: number = 92;

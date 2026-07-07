@@ -48,7 +48,7 @@
 
 /* Main Content and Top Header */
 .main-content {
-  flex-1: 1;
+  flex: 1; /* Fixed typo: changed from flex-1: 1; */
   display: flex;
   flex-direction: column;
   width: calc(100% - 240px);
@@ -58,7 +58,7 @@
   background-color: white;
   height: 70px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end; /* This forces the notification to the far right side */
   align-items: center;
   padding: 0 30px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
