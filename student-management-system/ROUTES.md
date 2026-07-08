@@ -1,58 +1,65 @@
-# Student CRUD Module — Route Reference
+# Student CRUD Module — Merge Guide
 
-This file documents the routes exposed by the `feature/student-crud` branch.
-When merging, replace `href="#"` placeholders in the dashboard with `routerLink` values below.
-
----
-
-## Admin Routes
-
-| Action                        | routerLink                        | Notes                          |
-|-------------------------------|-----------------------------------|--------------------------------|
-| View all students (list)      | `/admin/students`                 | "Manage Students" sidebar link |
-| Add new student               | `/admin/students/add`             | "+ Register New Student" btn   |
-| Edit a student                | `/admin/students/edit/:id`        | Pass student id dynamically    |
-
-### How to wire "Manage Students" sidebar link (admin-dashboard.html)
-```html
-<!-- Replace: <a href="#">Manage Students</a> -->
-<a routerLink="/admin/students">Manage Students</a>
-```
-
-### How to wire "+ Register New Student" button (admin-dashboard.html)
-```html
-<!-- Replace: <button class="btn-add">+ Register New Student</button> -->
-<button class="btn-add" routerLink="/admin/students/add">+ Register New Student</button>
-```
-
-### How to wire "Edit Details" button (admin-dashboard.html)
-```html
-<!-- Replace: <button class="btn-edit">✏️ Edit Details</button> -->
-<button class="btn-edit" [routerLink]="['/admin/students/edit', student.id]">✏️ Edit Details</button>
-```
+Branch: `feature/student-crud`  
+Owner: Samya Khastagir  
 
 ---
 
-## Student Routes
+## Routes this branch adds
 
-| Action                        | routerLink                        | Notes                                    |
-|-------------------------------|-----------------------------------|------------------------------------------|
-| Student view own info         | `/student/dashboard`              | Student role — read-only profile view    |
+| Route path               | Component            | Who uses it         |
+|--------------------------|----------------------|---------------------|
+| `/admin/students`        | StudentListComponent | Admin — view all    |
+| `/admin/students/add`    | StudentFormComponent | Admin — add student |
+| `/admin/students/edit/:id` | StudentFormComponent | Admin — edit student |
+| `/student/profile`       | StudentViewComponent | Student — own info  |
 
-### How to wire student dashboard link (student-dashboard.html or sidebar)
-```html
-<!-- Replace: <a href="#">Dashboard</a> -->
-<a routerLink="/student/dashboard">Dashboard</a>
-```
+These do NOT conflict with dashboard routes (`/admin`, `/student`) — they are separate paths.
 
 ---
 
-## Important — RouterModule must be imported
+## Step 1 — Merge app.routes.ts
 
-For `routerLink` to work in the dashboard components, add `RouterModule` to their imports:
-
+Dashboard branch has:
 ```typescript
-// admin-dashboard.ts
+export const routes: Routes = [
+  { path: '', redirectTo: 'student', pathMatch: 'full' },
+  { path: 'student', component: StudentDashboard },
+  { path: 'admin',   component: AdminDashboard }
+];
+```
+
+After merge, `app.routes.ts` should be:
+```typescript
+import { Routes } from '@angular/router';
+import { StudentDashboard } from './dashboard/student-dashboard/student-dashboard';
+import { AdminDashboard }   from './dashboard/admin-dashboard/admin-dashboard';
+
+export const routes: Routes = [
+  // Dashboard routes (owned by feature/dashboard)
+  { path: '', redirectTo: 'student', pathMatch: 'full' },
+  { path: 'student', component: StudentDashboard },
+  { path: 'admin',   component: AdminDashboard },
+
+  // Student CRUD routes (owned by feature/student-crud) ← ADD THIS BLOCK
+  {
+    path: '',
+    loadChildren: () =>
+      import('./students/students.routes').then(m => m.studentRoutes)
+  },
+
+  { path: '**', redirectTo: 'student' }
+];
+```
+
+---
+
+## Step 2 — Wire admin-dashboard.html buttons
+
+File: `src/app/dashboard/admin-dashboard/admin-dashboard.html`
+
+**Add `RouterModule` to admin-dashboard.ts imports first:**
+```typescript
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -62,10 +69,87 @@ import { RouterModule } from '@angular/router';
 })
 ```
 
+**Then replace placeholder links/buttons:**
+
+```html
+<!-- Sidebar: Manage Students -->
+<!-- FROM: <a href="#">Manage Students</a> -->
+<!-- TO:                                   -->
+<a routerLink="/admin/students">Manage Students</a>
+
+<!-- Quick Controls: Register New Student -->
+<!-- FROM: <button class="btn-add">+ Register New Student</button> -->
+<!-- TO:                                                            -->
+<button class="btn-add" routerLink="/admin/students/add">+ Register New Student</button>
+
+<!-- Student Record Editor: Edit Details -->
+<!-- FROM: <button class="btn-edit">✏️ Edit Details</button> -->
+<!-- TO (replace mockStudentId with actual student id):       -->
+<button class="btn-edit" [routerLink]="['/admin/students/edit', mockStudentId]">✏️ Edit Details</button>
+```
+
 ---
 
-## No conflicts expected
+## Step 3 — Wire student-dashboard.html (student profile link)
 
-- All route paths are unique and do not overlap with `/student` or `/admin` dashboard routes.
-- The dashboard branch currently uses `path: 'student'` and `path: 'admin'` — these are **different** from `/student/dashboard` and `/admin/students`.
-- No shared files are modified by this branch. Only files under `src/app/students/` and `src/app/services/` and `src/app/models/` are owned by this branch.
+File: `src/app/dashboard/student-dashboard/student-dashboard.html`
+
+**Add `RouterModule` to student-dashboard.ts imports first:**
+```typescript
+import { RouterModule } from '@angular/router';
+
+@Component({
+  standalone: true,
+  imports: [RouterModule],   // ← add this
+  ...
+})
+```
+
+**Then add a "My Profile" link in the sidebar or quick nav:**
+```html
+<!-- Sidebar — add below Dashboard link -->
+<a routerLink="/student/profile">My Profile</a>
+
+<!-- OR in Quick Navigation buttons -->
+<button routerLink="/student/profile">View My Profile</button>
+```
+
+---
+
+## Step 4 — Verify app.ts has RouterOutlet
+
+After merge, `app.ts` must import `RouterOutlet`:
+```typescript
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  standalone: true,
+  imports: [RouterOutlet, StudentDashboard, AdminDashboard],  // keep all three
+  ...
+})
+```
+
+---
+
+## Files owned by this branch (do NOT modify these during merge)
+
+```
+src/app/models/student.model.ts
+src/app/services/student.service.ts
+src/app/students/
+  ├── students.routes.ts
+  ├── services/toast.service.ts
+  └── components/
+      ├── student-list/   (admin CRUD list)
+      ├── student-form/   (admin add/edit)
+      └── student-view/   (student profile)
+db.json                   (mock API data)
+ROUTES.md                 (this file)
+```
+
+## Files the merge leader needs to update (conflict resolution)
+
+```
+src/app/app.routes.ts   ← combine dashboard routes + loadChildren block
+src/app/app.ts          ← keep RouterOutlet + both dashboard component imports
+```
