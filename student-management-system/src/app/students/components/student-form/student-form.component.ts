@@ -2,11 +2,8 @@ import { Component, OnInit, OnDestroy, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-  AbstractControl
+  FormBuilder, FormGroup, ReactiveFormsModule,
+  Validators, AbstractControl
 } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -15,7 +12,6 @@ import { StudentService } from '../../../services/student.service';
 import { ToastService } from '../../services/toast.service';
 import { ToastComponent } from '../toast/toast.component';
 
-/** Whole-number validator */
 function integerValidator(control: AbstractControl) {
   const v = control.value;
   if (v === null || v === '') return null;
@@ -63,77 +59,59 @@ export class StudentFormComponent implements OnInit, OnDestroy {
     this.studentService.getStudentById(id)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: student => {
-          this.form.patchValue({
-            name:   student.name,
-            age:    student.age,
-            course: student.course,
-            email:  student.email
-          });
+        next: s => {
+          this.form.patchValue({ name: s.name, age: s.age, course: s.course, email: s.email });
           this.loading.set(false);
         },
         error: () => {
           this.loading.set(false);
           this.toastService.show('Could not load student data.', 'error');
-          this.router.navigate(['/students']);
+          this.router.navigate(['/admin/students']);
         }
       });
   }
 
   onSubmit(): void {
-    // Mark all fields as touched so inline errors appear
     this.form.markAllAsTouched();
     if (this.form.invalid) return;
-
     const value = this.form.value;
 
-    if (this.isEditMode()) {
-      const id = this.studentId()!;
-      this.submitting.set(true);
-      this.studentService.updateStudent(id, { id, ...value })
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: () => {
-            this.submitting.set(false);
-            this.toastService.show('Student updated successfully.', 'success');
-            this.router.navigate(['/students']);
-          },
-          error: () => {
-            this.submitting.set(false);
-            this.toastService.show('Failed to update student. Please try again.', 'error');
-          }
-        });
-    } else {
-      this.submitting.set(true);
-      this.studentService.createStudent(value)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: () => {
-            this.submitting.set(false);
-            this.toastService.show('Student added successfully.', 'success');
-            this.router.navigate(['/students']);
-          },
-          error: () => {
-            this.submitting.set(false);
-            this.toastService.show('Failed to add student. Please try again.', 'error');
-          }
-        });
-    }
+    this.submitting.set(true);
+    const request$ = this.isEditMode()
+      ? this.studentService.updateStudent(this.studentId()!, { id: this.studentId()!, ...value })
+      : this.studentService.createStudent(value);
+
+    request$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: () => {
+        this.submitting.set(false);
+        this.toastService.show(
+          this.isEditMode() ? 'Student updated successfully.' : 'Student added successfully.',
+          'success'
+        );
+        this.router.navigate(['/admin/students']);
+      },
+      error: () => {
+        this.submitting.set(false);
+        this.toastService.show(
+          this.isEditMode() ? 'Failed to update student.' : 'Failed to add student.',
+          'error'
+        );
+      }
+    });
   }
 
   onCancel(): void {
-    this.router.navigate(['/students']);
+    this.router.navigate(['/admin/students']);
   }
 
-  /** Helper used in template */
   hasError(field: string, error: string): boolean {
     const ctrl = this.form.get(field);
-    return !!(ctrl && ctrl.touched && ctrl.hasError(error));
+    return !!(ctrl?.touched && ctrl.hasError(error));
   }
 
   isFieldInvalid(field: string): boolean {
     const ctrl = this.form.get(field);
-    return !!(ctrl && ctrl.touched && ctrl.invalid);
+    return !!(ctrl?.touched && ctrl.invalid);
   }
 
   ngOnDestroy(): void {

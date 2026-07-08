@@ -30,13 +30,13 @@ export class StudentListComponent implements OnInit, OnDestroy {
   deleteTarget = signal<Student | null>(null);
   deleting     = signal(false);
 
-  searchCtrl   = new FormControl('');
-  searchError  = signal('');
+  searchCtrl  = new FormControl('');
+  searchError = signal('');
 
   ngOnInit(): void {
     this.loadStudents();
 
-    // Debounced search (300 ms); instant clear
+    // Instant clear — bypass debounce
     this.searchCtrl.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(raw => {
@@ -46,20 +46,14 @@ export class StudentListComponent implements OnInit, OnDestroy {
           return;
         }
         this.searchError.set('');
-
         if (!val.trim()) {
-          // Instant clear — bypass debounce
           this.displayed.set(this.allStudents());
-          return;
         }
       });
 
+    // Debounced filter (300 ms)
     this.searchCtrl.valueChanges
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        takeUntil(this.destroy$)
-      )
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
       .subscribe(raw => {
         const val = (raw ?? '').trim();
         if (!val || val.length > 100) return;
@@ -108,7 +102,7 @@ export class StudentListComponent implements OnInit, OnDestroy {
   }
 
   onEdit(id: string): void {
-    this.router.navigate(['/students/edit', id]);
+    this.router.navigate(['/admin/students/edit', id]);
   }
 
   onDeleteClick(student: Student): void {
@@ -122,7 +116,6 @@ export class StudentListComponent implements OnInit, OnDestroy {
   onDeleteConfirm(): void {
     const target = this.deleteTarget();
     if (!target) return;
-
     this.deleting.set(true);
     this.studentService.deleteStudent(target.id)
       .pipe(takeUntil(this.destroy$))

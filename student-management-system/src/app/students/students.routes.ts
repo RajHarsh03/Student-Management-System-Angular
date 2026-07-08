@@ -1,29 +1,27 @@
 import { Routes } from '@angular/router';
 
 export const studentRoutes: Routes = [
+  // Admin routes — full CRUD
   {
-    path: '',
+    path: 'admin/students',
     loadComponent: () =>
-      import('./components/student-list/student-list.component').then(
-        m => m.StudentListComponent
-      )
+      import('./components/student-list/student-list.component').then(m => m.StudentListComponent)
   },
   {
-    path: 'add',
+    path: 'admin/students/add',
     loadComponent: () =>
-      import('./components/student-form/student-form.component').then(
-        m => m.StudentFormComponent
-      )
+      import('./components/student-form/student-form.component').then(m => m.StudentFormComponent)
   },
   {
-    path: 'edit/:id',
+    path: 'admin/students/edit/:id',
     loadComponent: () =>
-      import('./components/student-form/student-form.component').then(
-        m => m.StudentFormComponent
-      )
+      import('./components/student-form/student-form.component').then(m => m.StudentFormComponent)
   },
+
+  // Student route — view own info only
   {
-    path: '**',
-    redirectTo: ''
+    path: 'student/dashboard',
+    loadComponent: () =>
+      import('./components/student-view/student-view.component').then(m => m.StudentViewComponent)
   }
 ];

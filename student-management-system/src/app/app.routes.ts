@@ -1,18 +1,16 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
+  // Student management module (admin + student views)
   {
-    path: 'students',
+    path: '',
     loadChildren: () =>
       import('./students/students.routes').then(m => m.studentRoutes)
   },
-  {
-    path: '',
-    redirectTo: 'students',
-    pathMatch: 'full'
-  },
-  {
-    path: '**',
-    redirectTo: 'students'
-  }
+
+  // Default redirect → admin student list
+  { path: '', redirectTo: 'admin/students', pathMatch: 'full' },
+
+  // Catch-all
+  { path: '**', redirectTo: 'admin/students' }
 ];
