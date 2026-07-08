@@ -1,0 +1,127 @@
+<app-toast></app-toast>
+
+<div class="page-container">
+  <div class="card" style="max-width:560px; margin:0 auto;">
+
+    <div class="page-header">
+      <h1>{{ isEditMode() ? 'Edit Student' : 'Add Student' }}</h1>
+    </div>
+
+    <!-- Loading existing data (edit mode) -->
+    @if (loading()) {
+      <div class="spinner-overlay"><div class="spinner"></div></div>
+    }
+
+    @if (!loading()) {
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input
+            id="name"
+            type="text"
+            formControlName="name"
+            placeholder="e.g. Alice Johnson"
+            [class.is-invalid]="isFieldInvalid('name')"
+          />
+          @if (hasError('name', 'required')) {
+            <p class="form-error">Name is required.</p>
+          }
+          @if (hasError('name', 'minlength')) {
+            <p class="form-error">Name must be at least 2 characters.</p>
+          }
+          @if (hasError('name', 'maxlength')) {
+            <p class="form-error">Name must not exceed 100 characters.</p>
+          }
+        </div>
+
+        <!-- Age -->
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input
+            id="age"
+            type="number"
+            formControlName="age"
+            placeholder="e.g. 20"
+            [class.is-invalid]="isFieldInvalid('age')"
+            min="5"
+            max="100"
+          />
+          @if (hasError('age', 'required')) {
+            <p class="form-error">Age is required.</p>
+          }
+          @if (hasError('age', 'min')) {
+            <p class="form-error">Age must be at least 5.</p>
+          }
+          @if (hasError('age', 'max')) {
+            <p class="form-error">Age must not exceed 100.</p>
+          }
+          @if (hasError('age', 'integer')) {
+            <p class="form-error">Age must be a whole number.</p>
+          }
+        </div>
+
+        <!-- Course -->
+        <div class="form-group">
+          <label for="course">Course</label>
+          <input
+            id="course"
+            type="text"
+            formControlName="course"
+            placeholder="e.g. Computer Science"
+            [class.is-invalid]="isFieldInvalid('course')"
+          />
+          @if (hasError('course', 'required')) {
+            <p class="form-error">Course is required.</p>
+          }
+          @if (hasError('course', 'minlength')) {
+            <p class="form-error">Course must be at least 2 characters.</p>
+          }
+          @if (hasError('course', 'maxlength')) {
+            <p class="form-error">Course must not exceed 100 characters.</p>
+          }
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="e.g. alice@example.com"
+            [class.is-invalid]="isFieldInvalid('email')"
+          />
+          @if (hasError('email', 'required')) {
+            <p class="form-error">Email is required.</p>
+          }
+          @if (hasError('email', 'email')) {
+            <p class="form-error">Please enter a valid email address.</p>
+          }
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="submitting()"
+          >
+            @if (submitting()) {
+              <span class="spinner" style="width:16px;height:16px;border-width:2px;"></span>
+              &nbsp;{{ isEditMode() ? 'Saving…' : 'Adding…' }}
+            } @else {
+              {{ isEditMode() ? 'Save Changes' : 'Add Student' }}
+            }
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="onCancel()" [disabled]="submitting()">
+            Cancel
+          </button>
+        </div>
+
+      </form>
+    }
+
+  </div>
+</div>

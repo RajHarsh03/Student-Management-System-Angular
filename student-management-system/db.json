@@ -1,0 +1,25 @@
+{
+  "students": [
+    {
+      "id": "1",
+      "name": "Alice Johnson",
+      "age": 20,
+      "course": "Computer Science",
+      "email": "alice@example.com"
+    },
+    {
+      "id": "2",
+      "name": "Bob Smith",
+      "age": 22,
+      "course": "Business Administration",
+      "email": "bob@example.com"
+    },
+    {
+      "id": "3",
+      "name": "Clara Lee",
+      "age": 21,
+      "course": "Data Science",
+      "email": "clara@example.com"
+    }
+  ]
+}
