@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:student-management-system": "node dist/student-management-system/server/server.mjs",
-    "api": "json-server --watch db.json --port 3000"
+    "api": "node_modules/.bin/json-server --watch db.json --port 3000"
   },
   "private": true,
   "packageManager": "npm@11.6.1",
