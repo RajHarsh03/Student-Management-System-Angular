@@ -22,12 +22,5 @@ export const studentRoutes: Routes = [
     loadComponent: () =>
       import('./components/student-form/student-form.component')
         .then(m => m.StudentFormComponent)
-  },
-  {
-    path: 'student/profile',
-    canActivate: [AuthGuard],
-    loadComponent: () =>
-      import('./components/student-view/student-view.component')
-        .then(m => m.StudentViewComponent)
   }
 ];

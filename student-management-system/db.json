@@ -2,14 +2,14 @@
   "students": [
     {
       "id": "1",
-      "name": "Alice Johnson",
+      "name": "Alice ",
       "age": 20,
       "course": "Computer Science",
       "email": "alice@example.com"
     },
     {
       "id": "2",
-      "name": "Bob Smith",
+      "name": "Bob",
       "age": 22,
       "course": "Business Administration",
       "email": "bob@example.com"
@@ -21,5 +21,6 @@
       "course": "Data Science",
       "email": "clara@example.com"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

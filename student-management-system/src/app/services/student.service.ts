@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, switchMap, map } from 'rxjs';
 import { Student } from '../models/student.model';
 
 @Injectable({ providedIn: 'root' })
@@ -18,7 +18,18 @@ export class StudentService {
   }
 
   createStudent(student: Omit<Student, 'id'>): Observable<Student> {
-    return this.http.post<Student>(this.apiUrl, student);
+    return this.getStudents().pipe(
+      map(students => {
+        const maxId = students.reduce((max, s) => {
+          const num = parseInt(s.id, 10);
+          return !isNaN(num) && num > max ? num : max;
+        }, 0);
+        return String(maxId + 1);
+      }),
+      switchMap(nextId =>
+        this.http.post<Student>(this.apiUrl, { id: nextId, ...student })
+      )
+    );
   }
 
   updateStudent(id: string, student: Student): Observable<Student> {
