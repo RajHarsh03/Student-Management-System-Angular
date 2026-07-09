@@ -1,0 +1,83 @@
+<div class="dashboard-container">
+
+  <!-- Sidebar — Student purple #5D3EBC matching student-dashboard.css -->
+  <aside class="sidebar">
+    <div class="logo-area">
+      <h2>Student</h2>
+    </div>
+    <nav class="nav-links">
+      <a routerLink="/student">Dashboard</a>
+      <a routerLink="/student/profile" class="active-link">My Profile</a>
+      <a href="#">Logout</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="top-header">
+      <div class="profile-info">
+        <span class="bell-icon">🔔</span>
+        <span class="user-name">Notifications</span>
+      </div>
+    </header>
+
+    <div class="dashboard-grid">
+
+      <!-- Welcome banner -->
+      @if (student()) {
+        <section class="welcome-banner">
+          <h1>Welcome, {{ student()!.name }}! 👋</h1>
+          <p>Here is your enrolled information. Contact your administrator if anything needs to be updated.</p>
+        </section>
+      } @else {
+        <section class="welcome-banner">
+          <h1>Student Portal 👋</h1>
+          <p>Loading your information…</p>
+        </section>
+      }
+
+      <!-- Info card -->
+      <section class="card info-card">
+        <h3>My Student Profile</h3>
+
+        @if (loading()) {
+          <div class="spinner-wrap"><div class="spinner"></div></div>
+        }
+
+        @if (!loading() && errorMsg()) {
+          <p class="error-msg">⚠️ {{ errorMsg() }}</p>
+        }
+
+        @if (!loading() && student()) {
+          <ul class="info-list">
+            <li><span class="label">Student ID</span><span class="value">{{ student()!.id }}</span></li>
+            <li><span class="label">Full Name</span><span class="value">{{ student()!.name }}</span></li>
+            <li><span class="label">Age</span><span class="value">{{ student()!.age }}</span></li>
+            <li><span class="label">Course</span><span class="value">{{ student()!.course }}</span></li>
+            <li><span class="label">Email</span><span class="value">{{ student()!.email }}</span></li>
+          </ul>
+        }
+      </section>
+
+      <!-- Quick nav card — mirrors student-dashboard quick navigation card -->
+      <section class="card quick-nav">
+        <h3>Quick Navigation</h3>
+        <div class="nav-buttons">
+          <button>View Grades</button>
+          <button>Class Schedule</button>
+          <button>Contact Faculty</button>
+        </div>
+      </section>
+
+      <!-- Notice card -->
+      <section class="card notice-card">
+        <h3>Important Notices</h3>
+        <div class="notice-item">
+          <h5>Academic Calendar Updated</h5>
+          <p>Please check the main university portal for the latest exam schedule and semester dates.</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>

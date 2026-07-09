@@ -4,10 +4,10 @@
       <h2>Admin</h2>
     </div>
     <nav class="nav-links">
-      <a href="#" class="active-link">Admin Console</a>
-      <a href="#">Manage Students</a>
-      <a href="#">Manage Faculty</a>
-      <a href="#">Logout</a>
+      <a routerLink="/admin-dashboard" class="active-link">Dashboard</a>
+      <a routerLink="/admin/students">Manage Students</a>
+      <a href="#" (click)="$event.preventDefault()">Manage Faculty</a>
+      <a href="#" (click)="logout()">Logout</a>
     </nav>
   </aside>
 

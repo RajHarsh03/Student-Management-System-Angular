@@ -1,0 +1,131 @@
+<app-toast></app-toast>
+
+<div class="dashboard-container">
+
+  <!-- Sidebar — Admin purple #3B2475 matching dashboard branch -->
+  <aside class="sidebar">
+    <div class="logo-area">
+      <h2>Admin</h2>
+    </div>
+    <nav class="nav-links">
+      <a routerLink="/admin-dashboard">Admin Console</a>
+      <a routerLink="/admin/students" routerLinkActive="active-link">Manage Students</a>
+      <a href="#" (click)="$event.preventDefault()">Manage Faculty</a>
+      <a href="#" (click)="logout()">Logout</a>
+    </nav>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main-content">
+
+    <!-- Top header -->
+    <header class="top-header">
+      <div class="profile-info">
+        <span class="bell-icon">🔔</span>
+        <span class="user-name">Admin Panel</span>
+      </div>
+    </header>
+
+    <div class="page-body">
+
+      <!-- Page title row -->
+      <div class="page-title-row">
+        <h1>Student Management</h1>
+        <a routerLink="/admin/students/add" class="btn-primary-action">+ Add Student</a>
+      </div>
+
+      <!-- Search bar -->
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          placeholder="Search by name, course or email…"
+          [formControl]="searchCtrl"
+          maxlength="101"
+          aria-label="Search students"
+          class="search-input"
+        />
+        @if (searchError()) {
+          <p class="field-error">{{ searchError() }}</p>
+        }
+      </div>
+
+      <!-- Spinner -->
+      @if (loading()) {
+        <div class="spinner-wrap"><div class="spinner"></div></div>
+      }
+
+      <!-- Error -->
+      @if (!loading() && errorMsg()) {
+        <p class="error-msg">⚠️ {{ errorMsg() }}</p>
+      }
+
+      <!-- Table card -->
+      @if (!loading() && !errorMsg()) {
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Course</th>
+                  <th>Email</th>
+                  <th style="text-align:center">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @if (displayed().length === 0) {
+                  <tr>
+                    <td colspan="6" class="empty-cell">
+                      <div class="empty-state">
+                        <span>🎓</span>
+                        <p>No students found.</p>
+                      </div>
+                    </td>
+                  </tr>
+                }
+                @for (student of displayed(); track student.id) {
+                  <tr>
+                    <td><span class="id-badge">{{ student.id }}</span></td>
+                    <td><strong>{{ student.name }}</strong></td>
+                    <td>{{ student.age }}</td>
+                    <td>{{ student.course }}</td>
+                    <td>{{ student.email }}</td>
+                    <td style="text-align:center; white-space:nowrap;">
+                      <button class="btn-edit" (click)="onEdit(student.id)">✏️ Edit</button>
+                      <button class="btn-delete" (click)="onDeleteClick(student)">🗑️ Delete</button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      }
+
+    </div><!-- /page-body -->
+  </main>
+</div>
+
+<!-- Delete confirm modal -->
+@if (deleteTarget()) {
+  <div class="modal-backdrop">
+    <div class="modal">
+      <h3>Confirm Deletion</h3>
+      <p>Are you sure you want to delete <strong>{{ deleteTarget()!.name }}</strong>? This cannot be undone.</p>
+      @if (deleting()) {
+        <div class="spinner-wrap" style="padding:12px 0;">
+          <div class="spinner"></div>
+        </div>
+      }
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="onDeleteCancel()" [disabled]="deleting()">Cancel</button>
+        <button class="btn-delete-confirm" (click)="onDeleteConfirm()" [disabled]="deleting()">
+          {{ deleting() ? 'Deleting…' : 'Delete' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

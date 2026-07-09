@@ -20,5 +20,10 @@ export const routes: Routes = [
     component: StudentDashboard,
     canActivate: [AuthGuard]
   },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./students/students.routes').then(m => m.studentRoutes)
+  },
   { path: '**', redirectTo: 'login' }
 ];

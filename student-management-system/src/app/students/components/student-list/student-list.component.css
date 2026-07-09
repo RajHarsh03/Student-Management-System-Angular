@@ -1,0 +1,250 @@
+/* ── Layout — mirrors dashboard branch exactly ────── */
+.dashboard-container {
+  display: flex;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  color: #333;
+}
+
+/* Admin sidebar — #3B2475 midnight purple (same as admin-dashboard.css) */
+.sidebar {
+  width: 240px;
+  background-color: #3B2475;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  flex-shrink: 0;
+}
+
+.logo-area h2 {
+  margin-top: 10px;
+  margin-bottom: 40px;
+  font-size: 22px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.nav-links a {
+  color: #e6e0f8;
+  text-decoration: none;
+  padding: 12px 15px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links .active-link {
+  background-color: #271454;
+  color: white;
+  font-weight: bold;
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 240px);
+}
+
+.top-header {
+  background-color: white;
+  height: 70px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.profile-info { display: flex; align-items: center; gap: 20px; }
+.bell-icon { font-size: 20px; cursor: pointer; }
+.user-name { font-weight: 600; color: #3B2475; }
+
+/* Page body */
+.page-body { padding: 30px; }
+
+.page-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.page-title-row h1 {
+  font-size: 24px;
+  color: #3B2475;
+  font-weight: 700;
+}
+
+.btn-primary-action {
+  background-color: #3B2475;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.btn-primary-action:hover { opacity: 0.85; }
+
+/* Search */
+.search-wrap {
+  position: relative;
+  max-width: 380px;
+  margin-bottom: 20px;
+}
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #999;
+}
+.search-input {
+  width: 100%;
+  padding: 10px 16px 10px 36px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-input:focus { border-color: #3B2475; }
+.field-error { color: #dc3545; font-size: 12px; margin-top: 4px; }
+
+/* Spinner */
+.spinner-wrap { display: flex; justify-content: center; padding: 40px; }
+.spinner {
+  width: 40px; height: 40px;
+  border: 4px solid #e9ecef;
+  border-top-color: #3B2475;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Error */
+.error-msg { color: #dc3545; padding: 16px 0; font-size: 14px; }
+
+/* Card */
+.card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* Table */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+
+thead th {
+  background-color: #3B2475;
+  color: white;
+  padding: 13px 16px;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+tbody tr { border-bottom: 1px solid #f0f0f0; transition: background 0.15s; }
+tbody tr:hover { background: #f8f6ff; }
+tbody td { padding: 12px 16px; vertical-align: middle; }
+
+.id-badge {
+  display: inline-block;
+  background: #ede8ff;
+  color: #3B2475;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.empty-cell { text-align: center; padding: 0; }
+.empty-state { padding: 48px 20px; color: #888; }
+.empty-state span { font-size: 2.5rem; display: block; margin-bottom: 8px; }
+
+/* Row action buttons — matches admin-dashboard.css */
+.btn-edit {
+  background-color: #3B2475;
+  color: white;
+  border: none;
+  padding: 7px 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  margin-right: 6px;
+  transition: opacity 0.2s;
+}
+.btn-delete {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 7px 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: opacity 0.2s;
+}
+.btn-edit:hover, .btn-delete:hover { opacity: 0.85; }
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 8888;
+  animation: fadeIn .2s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+  background: white;
+  border-radius: 14px;
+  padding: 32px;
+  max-width: 440px;
+  width: 90%;
+  box-shadow: 0 8px 30px rgba(0,0,0,.18);
+}
+.modal h3 { font-size: 1.1rem; margin-bottom: 10px; color: #3B2475; }
+.modal p  { color: #666; margin-bottom: 24px; line-height: 1.5; font-size: 14px; }
+
+.modal-actions { display: flex; gap: 12px; justify-content: flex-end; }
+.btn-cancel {
+  background: #e9ecef; color: #495057; border: none;
+  padding: 9px 18px; border-radius: 8px; font-weight: 600;
+  cursor: pointer; font-size: 14px;
+}
+.btn-delete-confirm {
+  background: #dc3545; color: white; border: none;
+  padding: 9px 18px; border-radius: 8px; font-weight: 600;
+  cursor: pointer; font-size: 14px;
+}
+.btn-cancel:disabled, .btn-delete-confirm:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-container { flex-direction: column; }
+  .sidebar { width: 100%; }
+  .main-content { width: 100%; }
+  .page-body { padding: 15px; }
+}

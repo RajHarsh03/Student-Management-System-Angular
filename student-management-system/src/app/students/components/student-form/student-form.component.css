@@ -1,0 +1,89 @@
+/* ── Layout — mirrors dashboard branch ─────────────── */
+.dashboard-container {
+  display: flex;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  color: #333;
+}
+
+.sidebar {
+  width: 240px;
+  background-color: #3B2475;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  flex-shrink: 0;
+}
+.logo-area h2 { margin-top:10px; margin-bottom:40px; font-size:22px; text-align:center; letter-spacing:1px; }
+.nav-links { display:flex; flex-direction:column; gap:15px; }
+.nav-links a { color:#e6e0f8; text-decoration:none; padding:12px 15px; border-radius:8px; transition:background 0.2s; }
+.nav-links a:hover, .nav-links .active-link { background-color:#271454; color:white; font-weight:bold; }
+
+.main-content { flex:1; display:flex; flex-direction:column; width:calc(100% - 240px); }
+.top-header { background:white; height:70px; display:flex; justify-content:flex-end; align-items:center; padding:0 30px; box-shadow:0 2px 4px rgba(0,0,0,0.05); }
+.profile-info { display:flex; align-items:center; gap:20px; }
+.bell-icon { font-size:20px; cursor:pointer; }
+.user-name { font-weight:600; color:#3B2475; }
+
+.page-body { padding:30px; }
+.page-title-row { margin-bottom:24px; }
+.page-title-row h1 { font-size:24px; color:#3B2475; font-weight:700; }
+
+/* Form card */
+.card {
+  background:white;
+  border-radius:12px;
+  padding:30px;
+  box-shadow:0 4px 6px rgba(0,0,0,0.05);
+  max-width:560px;
+}
+.form-card { max-width: 560px; }
+
+/* Spinner */
+.spinner-wrap { display:flex; justify-content:center; padding:40px; }
+.spinner { width:40px; height:40px; border:4px solid #e9ecef; border-top-color:#3B2475; border-radius:50%; animation:spin .7s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* Form fields */
+.form-group { margin-bottom:20px; }
+.form-group label { display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:#444; }
+.form-group input {
+  width:100%; padding:10px 14px;
+  border:1px solid #ddd; border-radius:8px;
+  font-size:14px; outline:none;
+  transition:border-color 0.2s;
+}
+.form-group input:focus { border-color:#3B2475; }
+.form-group input.is-invalid { border-color:#dc3545; }
+.field-error { color:#dc3545; font-size:12px; margin-top:4px; }
+
+/* Buttons */
+.form-actions { display:flex; gap:12px; margin-top:28px; }
+.btn-submit {
+  background-color:#3B2475; color:white; border:none;
+  padding:10px 22px; border-radius:8px; font-size:14px;
+  font-weight:600; cursor:pointer; display:flex; align-items:center; gap:8px;
+  transition:opacity 0.2s;
+}
+.btn-submit:hover:not(:disabled) { opacity:0.85; }
+.btn-submit:disabled { opacity:0.5; cursor:not-allowed; }
+
+.btn-cancel-form {
+  background-color:#e9ecef; color:#495057; border:none;
+  padding:10px 22px; border-radius:8px; font-size:14px;
+  font-weight:600; cursor:pointer; transition:opacity 0.2s;
+}
+.btn-cancel-form:hover:not(:disabled) { opacity:0.85; }
+.btn-cancel-form:disabled { opacity:0.5; cursor:not-allowed; }
+
+.btn-spinner { width:14px; height:14px; border:2px solid rgba(255,255,255,0.4); border-top-color:white; border-radius:50%; animation:spin .7s linear infinite; display:inline-block; }
+
+/* Responsive */
+@media (max-width:768px) {
+  .dashboard-container { flex-direction:column; }
+  .sidebar { width:100%; }
+  .main-content { width:100%; }
+  .page-body { padding:15px; }
+}

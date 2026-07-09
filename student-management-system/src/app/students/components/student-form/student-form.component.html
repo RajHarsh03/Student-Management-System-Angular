@@ -1,0 +1,102 @@
+<app-toast></app-toast>
+
+<div class="dashboard-container">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo-area">
+      <h2>Admin</h2>
+    </div>
+    <nav class="nav-links">
+      <a routerLink="/admin-dashboard">Admin Console</a>
+      <a routerLink="/admin/students" routerLinkActive="active-link">Manage Students</a>
+      <a href="#" (click)="$event.preventDefault()">Manage Faculty</a>
+      <a href="#" (click)="logout()">Logout</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="top-header">
+      <div class="profile-info">
+        <span class="bell-icon">🔔</span>
+        <span class="user-name">Admin Panel</span>
+      </div>
+    </header>
+
+    <div class="page-body">
+
+      <div class="page-title-row">
+        <h1>{{ isEditMode() ? 'Edit Student' : 'Add New Student' }}</h1>
+      </div>
+
+      <div class="card form-card">
+
+        @if (loading()) {
+          <div class="spinner-wrap"><div class="spinner"></div></div>
+        }
+
+        @if (!loading()) {
+          <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input id="name" type="text" formControlName="name"
+                placeholder="e.g. Alice Johnson"
+                [class.is-invalid]="isFieldInvalid('name')" />
+              @if (hasError('name','required'))   { <p class="field-error">Name is required.</p> }
+              @if (hasError('name','minlength'))  { <p class="field-error">Name must be at least 2 characters.</p> }
+              @if (hasError('name','maxlength'))  { <p class="field-error">Name must not exceed 100 characters.</p> }
+            </div>
+
+            <div class="form-group">
+              <label for="age">Age</label>
+              <input id="age" type="number" formControlName="age"
+                placeholder="e.g. 20" min="5" max="100"
+                [class.is-invalid]="isFieldInvalid('age')" />
+              @if (hasError('age','required')) { <p class="field-error">Age is required.</p> }
+              @if (hasError('age','min'))      { <p class="field-error">Age must be at least 5.</p> }
+              @if (hasError('age','max'))      { <p class="field-error">Age must not exceed 100.</p> }
+              @if (hasError('age','integer'))  { <p class="field-error">Age must be a whole number.</p> }
+            </div>
+
+            <div class="form-group">
+              <label for="course">Course</label>
+              <input id="course" type="text" formControlName="course"
+                placeholder="e.g. Computer Science"
+                [class.is-invalid]="isFieldInvalid('course')" />
+              @if (hasError('course','required'))  { <p class="field-error">Course is required.</p> }
+              @if (hasError('course','minlength')) { <p class="field-error">Course must be at least 2 characters.</p> }
+              @if (hasError('course','maxlength')) { <p class="field-error">Course must not exceed 100 characters.</p> }
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input id="email" type="email" formControlName="email"
+                placeholder="e.g. alice@example.com"
+                [class.is-invalid]="isFieldInvalid('email')" />
+              @if (hasError('email','required')) { <p class="field-error">Email is required.</p> }
+              @if (hasError('email','email'))    { <p class="field-error">Please enter a valid email address.</p> }
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-submit" [disabled]="submitting()">
+                @if (submitting()) {
+                  <span class="btn-spinner"></span>
+                  {{ isEditMode() ? 'Saving…' : 'Adding…' }}
+                } @else {
+                  {{ isEditMode() ? 'Save Changes' : 'Add Student' }}
+                }
+              </button>
+              <button type="button" class="btn-cancel-form" (click)="onCancel()" [disabled]="submitting()">
+                Cancel
+              </button>
+            </div>
+
+          </form>
+        }
+
+      </div><!-- /card -->
+    </div><!-- /page-body -->
+  </main>
+</div>
