@@ -1,59 +1,240 @@
-# StudentManagementSystem
+# Student Management System
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.13.
+Student Management System is an Angular capstone project built for internship learning and practice. The application focuses on the main Angular concepts covered during training: components, modules, routing, services, reactive forms, HTTP client, route guards, interceptors, RxJS basics, and Git workflow.
 
-## Development server
+The project provides a role-based web interface where an admin can manage student records and a student can log in to view student-related information.
 
-To start a local development server, run:
+## Project Objective
 
-```bash
-ng serve
+The main objective of this project is to build a structured Angular application using simple and understandable implementation patterns. The project is intentionally kept close to the internship class notes, so the code should avoid unnecessary advanced logic unless the team specifically needs it.
+
+## Main Features
+
+### Authentication
+
+- Login page
+- Admin and student login
+- Logout
+- Fake JWT token simulation
+- Session storage using `localStorage`
+- Role storage using `localStorage`
+- Route protection using `AuthGuard`
+- Authorization header using a class-based HTTP interceptor
+
+Demo login details:
+
+| Role | Username | Password |
+| --- | --- | --- |
+| Admin | `admin` | `admin123` |
+| Student | `student` | `student123` |
+
+### Student Management
+
+- View student list
+- Add student
+- Edit student
+- Delete student
+- Search students
+- Display student details
+- Connect to a local JSON server API
+
+Student fields:
+
+- Student ID
+- Student name
+- Age
+- Course
+- Email
+
+### Dashboard
+
+- Admin dashboard
+- Student dashboard
+- Welcome section
+- Quick navigation
+- Student summary area
+- Basic role-based content
+
+### Shared Module Scope
+
+The shared area is planned for reusable layout components:
+
+- Header
+- Sidebar
+- Footer
+- Shared Angular imports and exports
+- Simple `@Input()` and `@Output()` based communication
+
+Shared components should stay focused on layout and navigation. They should not duplicate authentication, student CRUD, dashboard, or UI utility logic.
+
+### UI and Utility Scope
+
+The UI and utility area is planned for small reusable UI pieces:
+
+- Loading spinner
+- Toast notifications
+- Pagination
+- Search box
+- Form validation message component
+- Loading HTTP interceptor
+
+These utilities should stay reusable and should not contain feature-specific business logic.
+
+## Technology Stack
+
+### Frontend
+
+- Angular `21`
+- TypeScript `5.9`
+- HTML5
+- CSS3
+
+### Angular Concepts Used
+
+- Components
+- Feature modules and routing files
+- Standalone route configuration
+- Angular Router
+- Services and dependency injection
+- Reactive Forms
+- Form validation
+- `HttpClient`
+- Route guards
+- HTTP interceptors
+- Observables and basic RxJS operators
+
+### Development Tools
+
+- Angular CLI
+- npm
+- JSON Server
+- Vitest
+- Git
+- GitHub
+- Visual Studio Code
+
+## Project Structure
+
+```text
+student-management-system/
+|-- db.json
+|-- package.json
+|-- README.md
+`-- src/
+    `-- app/
+        |-- auth/
+        |   |-- login/
+        |   |-- auth-routing.module.ts
+        |   |-- auth.module.ts
+        |   |-- auth.service.ts
+        |   |-- auth.guard.ts
+        |   `-- auth.interceptor.ts
+        |-- dashboard/
+        |   |-- admin-dashboard/
+        |   `-- student-dashboard/
+        |-- students/
+        |   |-- components/
+        |   |-- services/
+        |   `-- students.routes.ts
+        |-- models/
+        |-- services/
+        |-- app.config.ts
+        `-- app.routes.ts
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Planned integration areas:
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```text
+src/app/shared/
+src/app/ui/
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## API Setup
 
-```bash
-ng generate --help
+The project uses `json-server` with `db.json` for local student data.
+
+API endpoint:
+
+```text
+http://localhost:3000/students
 ```
 
-## Building
+The student service uses this API for:
 
-To build the project run:
+- `GET` students
+- `GET` student by ID
+- `POST` student
+- `PUT` student
+- `DELETE` student
 
-```bash
-ng build
-```
+## Getting Started
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Go inside the Angular project folder:
 
 ```bash
-ng test
+cd student-management-system
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+Install dependencies:
 
 ```bash
-ng e2e
+npm install
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Start the local API server:
 
-## Additional Resources
+```bash
+npm run api
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+In another terminal, start the Angular development server:
+
+```bash
+npm start
+```
+
+Open the app in the browser:
+
+```text
+http://localhost:4200
+```
+
+## Available Commands
+
+| Command | Purpose |
+| --- | --- |
+| `npm start` | Starts the Angular development server |
+| `npm run api` | Starts JSON Server on port `3000` |
+| `npm run build` | Creates a production build |
+| `npm test` | Runs unit tests |
+| `npm run watch` | Builds the app in watch mode |
+
+## Routing Overview
+
+Current route flow:
+
+- `/login` opens the login page
+- `/admin-dashboard` opens the admin dashboard after login
+- `/student-dashboard` opens the student dashboard after login
+- `/admin/students` opens the admin student list after login
+- `/admin/students/add` opens the add student form
+- `/admin/students/edit/:id` opens the edit student form
+
+Protected routes use `AuthGuard`.
+
+## Branch Plan
+
+Recommended project branches:
+
+| Branch | Purpose |
+| --- | --- |
+| `feature/auth` | Authentication and login |
+| `feature/student-crud` | Student management CRUD |
+| `feature/dashboard` | Dashboard module, if approved by the team |
+| `shared-module` | Header, sidebar, footer, and shared layout |
+| `feature/ui` | Loading spinner, toast, pagination, search, and form error utilities |
+| `main` | Final stable project branch |
+
+## Learning Outcome
+
+This project helps interns practice building a complete Angular application with a clear module structure, role-based access, CRUD operations, API integration, form validation, basic RxJS usage, and Git collaboration. The implementation should remain readable, maintainable, and aligned with the Angular concepts taught during the internship.
