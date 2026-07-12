@@ -22,31 +22,33 @@
         <h1>Assessments</h1>
       </div>
 
-      <div class="assessment-card card" *ngFor="let a of assessments">
-        <div class="assessment-header">
-          <div>
-            <h3 class="assessment-title">{{ a.title }}</h3>
-            <p class="assessment-subject">{{ a.subject }}</p>
+      <div class="assessments-grid">
+        <div class="assessment-card card" *ngFor="let a of assessments">
+          <div class="assessment-header">
+            <div>
+              <h3 class="assessment-title">{{ a.title }}</h3>
+              <p class="assessment-subject">{{ a.subject }}</p>
+            </div>
+            <span class="submitted-badge" *ngIf="a.submitted">Submitted</span>
           </div>
-          <span class="submitted-badge" *ngIf="a.submitted">Submitted</span>
-        </div>
 
-        <div class="deadline" [class.urgent]="a.isUrgent">
-          Deadline: {{ a.deadline }}
-          <span class="urgent-tag" *ngIf="a.isUrgent">Urgent</span>
-        </div>
+          <div class="deadline" [class.urgent]="a.isUrgent">
+            Deadline: {{ a.deadline }}
+            <span class="urgent-tag" *ngIf="a.isUrgent">Urgent</span>
+          </div>
 
-        <div class="assessment-actions" *ngIf="!a.submitted">
-          <label class="btn-upload">
-            {{ a.fileName ? a.fileName : 'Upload File' }}
-            <input type="file" (change)="onFileSelect($event, a)" hidden />
-          </label>
-          <button class="btn-submit" (click)="submit(a)" [disabled]="!a.fileName">Submit</button>
-        </div>
+          <div class="assessment-actions" *ngIf="!a.submitted">
+            <label class="btn-upload">
+              {{ a.fileName ? a.fileName : 'Upload File' }}
+              <input type="file" (change)="onFileSelect($event, a)" hidden />
+            </label>
+            <button class="btn-submit" (click)="submit(a)" [disabled]="!a.fileName">Submit</button>
+          </div>
 
-        <p class="submitted-file" *ngIf="a.submitted">
-          Submitted: <strong>{{ a.fileName }}</strong>
-        </p>
+          <p class="submitted-file" *ngIf="a.submitted">
+            Submitted: <strong>{{ a.fileName }}</strong>
+          </p>
+        </div>
       </div>
     </div>
   </main>

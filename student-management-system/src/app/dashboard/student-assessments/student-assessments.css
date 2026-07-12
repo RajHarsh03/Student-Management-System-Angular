@@ -12,6 +12,12 @@
 .page-title-row { margin-bottom:24px; }
 .page-title-row h1 { font-size:24px; color:#0d2248; font-weight:700; }
 
+.assessments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
 .card { background:#eef2f7; border-radius:12px; padding:20px; box-shadow:0 4px 6px rgba(0,0,0,0.05); margin-bottom:16px; }
 
 .assessment-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; }

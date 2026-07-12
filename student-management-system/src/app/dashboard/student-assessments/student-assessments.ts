@@ -27,11 +27,20 @@ export class StudentAssessmentsComponent {
   constructor(private authService: AuthService) {
     const stored = localStorage.getItem('adminAssessments');
     const adminList = stored ? JSON.parse(stored) : [];
-    this.assessments = adminList.map((a: any) => ({
-      ...a,
-      submitted: false,
-      fileName: ''
-    }));
+
+    if (adminList.length > 0) {
+      this.assessments = adminList.map((a: any) => ({
+        ...a,
+        submitted: false,
+        fileName: ''
+      }));
+    } else {
+      this.assessments = [
+        { id: 1, title: 'Angular Components Assignment', subject: 'Introduction to Angular', deadline: '2026-07-20', submitted: false, fileName: '', isUrgent: false },
+        { id: 2, title: 'Binary Trees Lab Report',       subject: 'Data Structures',         deadline: '2026-07-14', submitted: false, fileName: '', isUrgent: true  },
+        { id: 3, title: 'SQL Query Practice',            subject: 'Database Management',     deadline: '2026-07-25', submitted: false, fileName: '', isUrgent: false },
+      ];
+    }
   }
 
   onFileSelect(event: Event, assessment: Assessment): void {

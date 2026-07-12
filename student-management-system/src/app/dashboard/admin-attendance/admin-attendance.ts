@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
-import { StudentService } from '../../services/student.service';
 
 interface AttendanceRow {
   id: string;
@@ -17,21 +16,25 @@ interface AttendanceRow {
   templateUrl: './admin-attendance.html',
   styleUrls: ['./admin-attendance.css']
 })
-export class AdminAttendanceComponent implements OnInit {
+export class AdminAttendanceComponent {
 
   today: string = new Date().toLocaleDateString();
-  rows: AttendanceRow[] = [];
   saved: boolean = false;
 
-  constructor(private authService: AuthService, private studentService: StudentService) {}
+  rows: AttendanceRow[] = [
+    { id: '1',  name: 'Aarav Sharma',  status: null },
+    { id: '2',  name: 'Priya Patel',   status: null },
+    { id: '3',  name: 'Rohit Verma',   status: null },
+    { id: '4',  name: 'Sneha Iyer',    status: null },
+    { id: '5',  name: 'Karan Mehta',   status: null },
+    { id: '6',  name: 'Anjali Singh',  status: null },
+    { id: '7',  name: 'Vikram Nair',   status: null },
+    { id: '8',  name: 'Pooja Gupta',   status: null },
+    { id: '9',  name: 'Arjun Reddy',   status: null },
+    { id: '10', name: 'Neha Joshi',    status: null },
+  ];
 
-  ngOnInit(): void {
-    this.studentService.getStudents().subscribe({
-      next: students => {
-        this.rows = students.map(s => ({ id: s.id, name: s.name, status: null }));
-      }
-    });
-  }
+  constructor(private authService: AuthService) {}
 
   mark(row: AttendanceRow, status: 'Present' | 'Absent'): void {
     row.status = status;
