@@ -2,25 +2,93 @@
   "students": [
     {
       "id": "1",
-      "name": "Alice ",
+      "name": "Aarav Sharma",
       "age": 20,
       "course": "Computer Science",
-      "email": "alice@example.com"
+      "email": "student1@gmail.com",
+      "username": "aarav",
+      "password": "aarav123"
     },
     {
       "id": "2",
-      "name": "Bob",
-      "age": 22,
-      "course": "Business Administration",
-      "email": "bob@example.com"
+      "name": "Priya Patel",
+      "age": 21,
+      "course": "Information Technology",
+      "email": "student2@gmail.com",
+      "username": "priya",
+      "password": "priya123"
     },
     {
       "id": "3",
-      "name": "Clara Lee",
-      "age": 21,
+      "name": "Rohit Verma",
+      "age": 22,
+      "course": "Electronics Engineering",
+      "email": "student3@gmail.com",
+      "username": "rohit",
+      "password": "rohit123"
+    },
+    {
+      "id": "4",
+      "name": "Sneha Iyer",
+      "age": 20,
       "course": "Data Science",
-      "email": "clara@example.com"
+      "email": "student4@gmail.com",
+      "username": "sneha",
+      "password": "sneha123"
+    },
+    {
+      "id": "5",
+      "name": "Karan Mehta",
+      "age": 23,
+      "course": "Mechanical Engineering",
+      "email": "student5@gmail.com",
+      "username": "karan",
+      "password": "karan123"
+    },
+    {
+      "id": "6",
+      "name": "Anjali Singh",
+      "age": 21,
+      "course": "Business Administration",
+      "email": "student6@gmail.com",
+      "username": "anjali",
+      "password": "anjali123"
+    },
+    {
+      "id": "7",
+      "name": "Vikram Nair",
+      "age": 22,
+      "course": "Civil Engineering",
+      "email": "student7@gmail.com",
+      "username": "vikram",
+      "password": "vikram123"
+    },
+    {
+      "id": "8",
+      "name": "Pooja Gupta",
+      "age": 20,
+      "course": "Computer Science",
+      "email": "student8@gmail.com",
+      "username": "pooja",
+      "password": "pooja123"
+    },
+    {
+      "id": "9",
+      "name": "Arjun Reddy",
+      "age": 23,
+      "course": "Artificial Intelligence",
+      "email": "student9@gmail.com",
+      "username": "arjun",
+      "password": "arjun123"
+    },
+    {
+      "id": "10",
+      "name": "Neha Joshi",
+      "age": 21,
+      "course": "Information Technology",
+      "email": "student10@gmail.com",
+      "username": "neha",
+      "password": "neha123"
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }

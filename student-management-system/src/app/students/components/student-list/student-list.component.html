@@ -77,7 +77,6 @@
                   <tr>
                     <td colspan="6" class="empty-cell">
                       <div class="empty-state">
-                        <span>🎓</span>
                         <p>No students found.</p>
                       </div>
                     </td>
@@ -91,8 +90,8 @@
                     <td>{{ student.course }}</td>
                     <td>{{ student.email }}</td>
                     <td style="text-align:center; white-space:nowrap;">
-                      <button class="btn-edit" (click)="onEdit(student.id)">✏️ Edit</button>
-                      <button class="btn-delete" (click)="onDeleteClick(student)">🗑️ Delete</button>
+                      <button class="btn-edit" (click)="onEdit(student.id)">Edit</button>
+                      <button class="btn-delete" (click)="onDeleteClick(student)">Delete</button>
                     </td>
                   </tr>
                 }
