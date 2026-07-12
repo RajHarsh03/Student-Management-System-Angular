@@ -10,8 +10,8 @@ export class AuthService {
   private platformId = inject(PLATFORM_ID);
 
   private users = [
-    { username: 'admin', password: 'admin123', role: 'admin' },
-    { username: 'student', password: 'student123', role: 'student' }
+    { username: 'admin', password: 'admin123', role: 'admin', name: 'Admin User' },
+    { username: 'student', password: 'student123', role: 'student', name: 'Demo Student' }
   ];
 
   constructor(private router: Router) {}
@@ -24,16 +24,28 @@ export class AuthService {
     if (user && isPlatformBrowser(this.platformId)) {
       localStorage.setItem('token', 'fake-jwt-token');
       localStorage.setItem('role', user.role);
+      localStorage.setItem('name', user.name);
+      localStorage.setItem('username', user.username);
       return true;
     }
 
     return user !== undefined;
   }
 
+  loginDynamic(username: string, name: string, role: string): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    localStorage.setItem('token', 'fake-jwt-token');
+    localStorage.setItem('role', role);
+    localStorage.setItem('name', name);
+    localStorage.setItem('username', username);
+  }
+
   logout(): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('token');
       localStorage.removeItem('role');
+      localStorage.removeItem('name');
+      localStorage.removeItem('username');
     }
     this.router.navigate(['/login']);
   }
@@ -51,5 +63,15 @@ export class AuthService {
   getRole(): string | null {
     if (!isPlatformBrowser(this.platformId)) return null;
     return localStorage.getItem('role');
+  }
+
+  getName(): string {
+    if (!isPlatformBrowser(this.platformId)) return '';
+    return localStorage.getItem('name') ?? '';
+  }
+
+  getUsername(): string {
+    if (!isPlatformBrowser(this.platformId)) return '';
+    return localStorage.getItem('username') ?? '';
   }
 }

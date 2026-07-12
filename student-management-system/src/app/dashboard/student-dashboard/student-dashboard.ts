@@ -11,7 +11,7 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class StudentDashboard {
 
-  studentName: string = 'Ayush Prakash';
+  studentName: string = '';
   totalAssignmentsDue: number = 3;
   attendancePercentage: number = 92;
 
@@ -26,7 +26,9 @@ export class StudentDashboard {
   noticeTitle: string = 'Midterm Exam Schedule Posted';
   noticeContent: string = 'The midterm examination timetable has been updated on the main university portal. Please verify your room details.';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    this.studentName = this.authService.getName() || 'Student';
+  }
 
   logout(): void {
     this.authService.logout();

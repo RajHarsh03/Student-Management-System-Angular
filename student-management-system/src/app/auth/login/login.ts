@@ -68,11 +68,13 @@ export class LoginComponent {
 
     const username = this.username.value!;
     const password = this.password.value!;
-    const success  = this.authService.login(username, password);
+    const expectedRole = this.isAdminLogin ? 'admin' : 'student';
+
+    // First try hardcoded users (admin + demo student)
+    const success = this.authService.login(username, password);
 
     if (success) {
-      const role         = this.authService.getRole();
-      const expectedRole = this.isAdminLogin ? 'admin' : 'student';
+      const role = this.authService.getRole();
 
       if (role !== expectedRole) {
         this.authService.logout();
@@ -83,6 +85,28 @@ export class LoginComponent {
       }
 
       this.router.navigate([role === 'admin' ? '/admin-dashboard' : '/student-dashboard']);
+      return;
+    }
+
+    // Hardcoded login failed — try dynamic students from API (student mode only)
+    if (!this.isAdminLogin) {
+      this.http.get<any[]>('http://localhost:3000/students').subscribe({
+        next: students => {
+          const match = students.find(
+            s => s.username === username && s.password === password
+          );
+
+          if (match) {
+            this.authService.loginDynamic(match.username, match.name, 'student');
+            this.router.navigate(['/student-dashboard']);
+          } else {
+            this.errorMessage = 'Invalid username or password';
+          }
+        },
+        error: () => {
+          this.errorMessage = 'Could not connect to server. Please try again.';
+        }
+      });
     } else {
       this.errorMessage = 'Invalid username or password';
     }
