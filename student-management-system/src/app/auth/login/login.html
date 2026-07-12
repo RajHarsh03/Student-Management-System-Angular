@@ -4,6 +4,7 @@
 
   <div class="main-panel">
 
+    <!-- Left branding -->
     <div class="brand-section">
       <div class="brand-text">
         <p class="brand-title">STUDENT MANAGEMENT</p>
@@ -12,18 +13,28 @@
       <p class="brand-tagline">A centralized platform for managing student records, courses, and academic progress.</p>
     </div>
 
+    <!-- Right form -->
     <div class="form-section">
 
-      <div class="form-mode-label">
-        <span *ngIf="!isAdminMode">Student Login</span>
-        <span *ngIf="isAdminMode">Admin Login</span>
+      <!-- Top right admin toggle -->
+      <div class="top-row">
+        <p class="form-mode-label">
+          <span *ngIf="isStudentLogin">Student Login</span>
+          <span *ngIf="isAdminLogin">Admin Login</span>
+          <span *ngIf="isSignup">Student Sign Up</span>
+        </p>
+        <button type="button" class="admin-login-toggle" (click)="setMode(isAdminLogin ? 'student-login' : 'admin-login')">
+          <span *ngIf="!isAdminLogin">Login as Admin?</span>
+          <span *ngIf="isAdminLogin">Login as Student?</span>
+        </button>
       </div>
 
-      <div class="error-banner" *ngIf="errorMessage">
-        {{ errorMessage }}
-      </div>
+      <!-- Error / success banners -->
+      <div class="error-banner" *ngIf="errorMessage">{{ errorMessage }}</div>
+      <div class="success-banner" *ngIf="successMessage">{{ successMessage }}</div>
 
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+      <!-- ── Login form ───────────────────────────────── -->
+      <form *ngIf="!isSignup" [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
 
         <div class="field">
           <label for="username">Username</label>
@@ -31,7 +42,7 @@
             id="username"
             type="text"
             formControlName="username"
-            [placeholder]="isAdminMode ? 'Enter admin username' : 'Enter student username'"
+            [placeholder]="isAdminLogin ? 'Enter admin username' : 'Enter student username'"
             [class.input-error]="username.invalid && username.touched"
           />
           <span class="field-error" *ngIf="username.invalid && username.touched">
@@ -50,11 +61,9 @@
               [class.input-error]="password.invalid && password.touched"
             />
             <button type="button" class="eye-btn" (click)="togglePassword()">
-              <!-- eye open — password visible -->
               <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
               </svg>
-              <!-- eye off — password hidden -->
               <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>
               </svg>
@@ -66,18 +75,61 @@
           </span>
         </div>
 
-        <button type="submit" class="btn-login" [disabled]="loginForm.invalid">
-          Login
-        </button>
+        <button type="submit" class="btn-login" [disabled]="loginForm.invalid">Login</button>
 
       </form>
 
-      <button type="button" class="admin-login-toggle" (click)="toggleMode()">
-        <span *ngIf="!isAdminMode">Login as Admin?</span>
-        <span *ngIf="isAdminMode">Login as Student?</span>
-      </button>
+      <!-- ── Signup form ──────────────────────────────── -->
+      <form *ngIf="isSignup" [formGroup]="signupForm" (ngSubmit)="onSignup()" novalidate>
 
-      <div class="demo-access">
+        <div class="field">
+          <label for="sname">Full Name</label>
+          <input id="sname" type="text" formControlName="name" placeholder="Enter your full name" [class.input-error]="sName.invalid && sName.touched" />
+          <span class="field-error" *ngIf="sName.invalid && sName.touched">Name is required (min 2 characters).</span>
+        </div>
+
+        <div class="field">
+          <label for="susername">Username</label>
+          <input id="susername" type="text" formControlName="username" placeholder="Choose a username" [class.input-error]="sUsername.invalid && sUsername.touched" />
+          <span class="field-error" *ngIf="sUsername.invalid && sUsername.touched">Username is required (min 3 characters).</span>
+        </div>
+
+        <div class="field">
+          <label for="semail">Email</label>
+          <input id="semail" type="email" formControlName="email" placeholder="Enter your email" [class.input-error]="sEmail.invalid && sEmail.touched" />
+          <span class="field-error" *ngIf="sEmail.invalid && sEmail.touched">Valid email is required.</span>
+        </div>
+
+        <div class="field">
+          <label for="spassword">Password</label>
+          <div class="input-wrap">
+            <input id="spassword" [type]="showSignupPassword ? 'text' : 'password'" formControlName="password" placeholder="Choose a password" [class.input-error]="sPassword.invalid && sPassword.touched" />
+            <button type="button" class="eye-btn" (click)="toggleSignupPassword()">
+              <svg *ngIf="showSignupPassword" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+              </svg>
+              <svg *ngIf="!showSignupPassword" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>
+              </svg>
+            </button>
+          </div>
+          <span class="field-error" *ngIf="sPassword.invalid && sPassword.touched">Password must be at least 6 characters.</span>
+        </div>
+
+        <button type="submit" class="btn-login" [disabled]="signupForm.invalid">Create Account</button>
+
+      </form>
+
+      <!-- ── Bottom actions ──────────────────────────── -->
+      <div class="bottom-actions">
+        <button type="button" class="signup-toggle" *ngIf="!isAdminLogin" (click)="setMode(isSignup ? 'student-login' : 'signup')">
+          <span *ngIf="!isSignup">New student? Sign Up</span>
+          <span *ngIf="isSignup">Already have an account? Login</span>
+        </button>
+      </div>
+
+      <!-- Demo access -->
+      <div class="demo-access" *ngIf="!isSignup">
         <p class="demo-label">Demo access</p>
         <div class="demo-row">
           <span class="demo-badge admin">Admin</span>
