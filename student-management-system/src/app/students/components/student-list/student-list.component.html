@@ -10,7 +10,6 @@
     <nav class="nav-links">
       <a routerLink="/admin-dashboard">Dashboard</a>
       <a routerLink="/admin/students" routerLinkActive="active-link">Manage Students</a>
-      <a href="#" (click)="logout()">Logout</a>
     </nav>
   </aside>
 
@@ -20,8 +19,7 @@
     <!-- Top header -->
     <header class="top-header">
       <div class="profile-info">
-        <span class="bell-icon">🔔</span>
-        <span class="user-name">Admin Panel</span>
+        <button class="btn-logout" (click)="logout()">Logout</button>
       </div>
     </header>
 

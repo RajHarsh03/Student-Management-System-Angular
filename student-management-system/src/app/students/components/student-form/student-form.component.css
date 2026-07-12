@@ -14,13 +14,19 @@
   flex-direction: column;
   padding: 20px;
   flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 100;
 }
 .logo-area h2 { margin-top:10px; margin-bottom:40px; font-size:22px; text-align:center; letter-spacing:1px; }
 .nav-links { display:flex; flex-direction:column; gap:15px; }
 .nav-links a { color:#b2d4e8; text-decoration:none; padding:12px 15px; border-radius:8px; transition:background 0.2s; }
 .nav-links a:hover, .nav-links .active-link { background-color:#17c3d4; color:white; font-weight:bold; }
 
-.main-content { flex:1; display:flex; flex-direction:column; width:calc(100% - 240px); }
+.main-content { flex:1; display:flex; flex-direction:column; margin-left:240px; min-height:100vh; overflow-y:auto; }
 .top-header { background:#eef2f7; height:70px; display:flex; justify-content:flex-end; align-items:center; padding:0 30px; box-shadow:0 2px 4px rgba(0,0,0,0.05); }
 .profile-info { display:flex; align-items:center; gap:20px; }
 .bell-icon { font-size:20px; cursor:pointer; }
@@ -81,3 +87,16 @@
   .main-content { width:100%; }
   .page-body { padding:15px; }
 }
+
+.btn-logout {
+  background-color: #17c3d4;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.btn-logout:hover { opacity: 0.85; }
