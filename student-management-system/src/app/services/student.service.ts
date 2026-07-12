@@ -10,7 +10,9 @@ export class StudentService {
   constructor(private http: HttpClient) {}
 
   getStudents(): Observable<Student[]> {
-    return this.http.get<Student[]>(this.apiUrl);
+    return this.http.get<Student[]>(this.apiUrl, {
+      headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' }
+    });
   }
 
   getStudentById(id: string): Observable<Student> {

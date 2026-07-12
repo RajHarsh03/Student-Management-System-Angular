@@ -19,6 +19,7 @@ export class LoginComponent {
   successMessage: string = '';
   showPassword: boolean = false;
   showSignupPassword: boolean = false;
+  isLoading: boolean = false;
 
   loginForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
@@ -55,11 +56,12 @@ export class LoginComponent {
     this.successMessage = '';
     this.showPassword = false;
     this.showSignupPassword = false;
+    this.isLoading = false;
     this.loginForm.reset();
     this.signupForm.reset();
   }
 
-  togglePassword(): void      { this.showPassword = !this.showPassword; }
+  togglePassword(): void       { this.showPassword = !this.showPassword; }
   toggleSignupPassword(): void { this.showSignupPassword = !this.showSignupPassword; }
 
   onSubmit(): void {
@@ -70,7 +72,7 @@ export class LoginComponent {
     const password = this.password.value!;
     const expectedRole = this.isAdminLogin ? 'admin' : 'student';
 
-    // First try hardcoded users (admin + demo student)
+    // Try hardcoded users first (admin + demo student)
     const success = this.authService.login(username, password);
 
     if (success) {
@@ -88,28 +90,35 @@ export class LoginComponent {
       return;
     }
 
-    // Hardcoded login failed — try dynamic students from API (student mode only)
-    if (!this.isAdminLogin) {
-      this.http.get<any[]>('http://localhost:3000/students').subscribe({
-        next: students => {
-          const match = students.find(
-            s => s.username === username && s.password === password
-          );
-
-          if (match) {
-            this.authService.loginDynamic(match.username, match.name, 'student');
-            this.router.navigate(['/student-dashboard']);
-          } else {
-            this.errorMessage = 'Invalid username or password';
-          }
-        },
-        error: () => {
-          this.errorMessage = 'Could not connect to server. Please try again.';
-        }
-      });
-    } else {
+    // Admin mode — no API fallback
+    if (this.isAdminLogin) {
       this.errorMessage = 'Invalid username or password';
+      return;
     }
+
+    // Student mode — check API for dynamically created students
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    this.http.get<any[]>('http://localhost:3000/students').subscribe({
+      next: students => {
+        this.isLoading = false;
+        const match = students.find(
+          s => s.username === username && s.password === password
+        );
+
+        if (match) {
+          this.authService.loginDynamic(match.username, match.name, 'student');
+          this.router.navigate(['/student-dashboard']);
+        } else {
+          this.errorMessage = 'Invalid username or password';
+        }
+      },
+      error: () => {
+        this.isLoading = false;
+        this.errorMessage = 'Could not connect to server. Please try again.';
+      }
+    });
   }
 
   onSignup(): void {
@@ -118,6 +127,9 @@ export class LoginComponent {
 
     const { name, username, email, password } = this.signupForm.value;
 
+    this.isLoading = true;
+    this.errorMessage = '';
+
     this.http.get<any[]>('http://localhost:3000/students').subscribe({
       next: students => {
         const duplicate = students.find(
@@ -125,6 +137,7 @@ export class LoginComponent {
         );
 
         if (duplicate) {
+          this.isLoading = false;
           this.errorMessage = 'Username or email already exists.';
           return;
         }
@@ -146,16 +159,18 @@ export class LoginComponent {
 
         this.http.post('http://localhost:3000/students', newStudent).subscribe({
           next: () => {
-            this.successMessage = 'Account created! You can now log in as a student.';
-            this.errorMessage = '';
-            setTimeout(() => this.setMode('student-login'), 2000);
+            this.isLoading = false;
+            this.setMode('student-login');
+            this.successMessage = 'Account created! Please log in.';
           },
           error: () => {
+            this.isLoading = false;
             this.errorMessage = 'Signup failed. Please try again.';
           }
         });
       },
       error: () => {
+        this.isLoading = false;
         this.errorMessage = 'Could not connect to server.';
       }
     });

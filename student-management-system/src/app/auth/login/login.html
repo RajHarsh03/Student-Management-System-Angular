@@ -75,7 +75,10 @@
           </span>
         </div>
 
-        <button type="submit" class="btn-login" [disabled]="loginForm.invalid">Login</button>
+        <button type="submit" class="btn-login" [disabled]="loginForm.invalid || isLoading">
+          <span *ngIf="isLoading">Please wait…</span>
+          <span *ngIf="!isLoading">Login</span>
+        </button>
 
       </form>
 
@@ -116,7 +119,10 @@
           <span class="field-error" *ngIf="sPassword.invalid && sPassword.touched">Password must be at least 6 characters.</span>
         </div>
 
-        <button type="submit" class="btn-login" [disabled]="signupForm.invalid">Create Account</button>
+        <button type="submit" class="btn-login" [disabled]="signupForm.invalid || isLoading">
+          <span *ngIf="isLoading">Creating account…</span>
+          <span *ngIf="!isLoading">Create Account</span>
+        </button>
 
       </form>
 
