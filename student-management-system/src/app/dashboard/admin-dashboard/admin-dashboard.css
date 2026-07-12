@@ -266,3 +266,58 @@
   transition: opacity 0.2s;
 }
 .btn-logout:hover { opacity: 0.85; }
+
+.notice-form {
+  margin-top: 14px;
+}
+
+.notice-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #17c3d4;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  resize: vertical;
+  background: #ffffff;
+}
+
+.notice-form textarea:focus {
+  border-color: #0d2248;
+  box-shadow: 0 0 0 3px rgba(23,195,212,0.15);
+}
+
+.notice-form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.btn-submit-notice {
+  background: #17c3d4;
+  color: white;
+  border: none;
+  padding: 7px 18px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-submit-notice:hover { opacity: 0.85; }
+
+.btn-cancel-notice {
+  background: #dde8f0;
+  color: #0d2248;
+  border: none;
+  padding: 7px 18px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-cancel-notice:hover { opacity: 0.85; }

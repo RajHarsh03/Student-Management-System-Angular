@@ -6,6 +6,8 @@
     <nav class="nav-links">
       <a routerLink="/admin-dashboard" class="active-link">Dashboard</a>
       <a routerLink="/admin/students">Manage Students</a>
+      <a href="#" (click)="$event.preventDefault()">Manage Notices</a>
+      <a href="#" (click)="$event.preventDefault()">Account</a>
     </nav>
   </aside>
 
@@ -17,7 +19,7 @@
     </header>
 
     <div class="dashboard-grid">
-      
+
       <section class="welcome-banner">
         <h1>Welcome, Admin! 👋</h1>
         <p>You have {{ totalStudentsCount }} students enrolled. Manage records from the sidebar.</p>
@@ -26,9 +28,20 @@
       <section class="card quick-actions">
         <h3>Quick Controls</h3>
         <div class="action-buttons">
-          <button class="btn-add">+ Register New Student</button>
-          <button class="btn-notice">📢 Post System Notice</button>
-          <button class="btn-report">📄 Generate Enrollment Report</button>
+          <button class="btn-add" (click)="registerStudent()">Register New Student</button>
+          <button class="btn-notice" (click)="postNotice()">Post System Notice</button>
+        </div>
+
+        <div class="notice-form" *ngIf="showNoticeForm">
+          <textarea
+            [(ngModel)]="noticeText"
+            placeholder="Type your notice here..."
+            rows="3">
+          </textarea>
+          <div class="notice-form-actions">
+            <button class="btn-submit-notice" (click)="submitNotice()">Post</button>
+            <button class="btn-cancel-notice" (click)="cancelNotice()">Cancel</button>
+          </div>
         </div>
       </section>
 

@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule, FormsModule],
   templateUrl: './admin-dashboard.html',
   styleUrls: ['./admin-dashboard.css']
 })
@@ -13,8 +15,9 @@ export class AdminDashboard {
 
   adminName: string = 'Director Sarah Stone';
   adminRole: string = 'Super Admin';
-  activeSessions: number = 142;
   totalStudentsCount: number = 0;
+  showNoticeForm: boolean = false;
+  noticeText: string = '';
 
   mockStudentId: string = 'STU-2026-089';
   mockStudentName: string = 'Michael Scott';
@@ -27,9 +30,29 @@ export class AdminDashboard {
   logTimestamp: string = 'July 04, 2026 - 18:42:10 UTC';
   logActionMessage: string = 'Admin Account (Sarah Stone) updated tuition fee waiver status flags for 14 scholarship applicants.';
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
     const stored = localStorage.getItem('totalStudents');
     this.totalStudentsCount = stored ? parseInt(stored, 10) : 0;
+  }
+
+  registerStudent(): void {
+    this.router.navigate(['/admin/students/add']);
+  }
+
+  postNotice(): void {
+    this.showNoticeForm = true;
+  }
+
+  submitNotice(): void {
+    if (!this.noticeText.trim()) return;
+    localStorage.setItem('systemNotice', this.noticeText.trim());
+    this.showNoticeForm = false;
+    this.noticeText = '';
+  }
+
+  cancelNotice(): void {
+    this.showNoticeForm = false;
+    this.noticeText = '';
   }
 
   logout(): void {
