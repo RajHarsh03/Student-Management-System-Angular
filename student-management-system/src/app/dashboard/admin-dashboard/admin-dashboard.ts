@@ -14,7 +14,7 @@ export class AdminDashboard {
   adminName: string = 'Director Sarah Stone';
   adminRole: string = 'Super Admin';
   activeSessions: number = 142;
-  totalStudentsCount: number = 3840;
+  totalStudentsCount: number = 0;
 
   mockStudentId: string = 'STU-2026-089';
   mockStudentName: string = 'Michael Scott';
@@ -27,7 +27,10 @@ export class AdminDashboard {
   logTimestamp: string = 'July 04, 2026 - 18:42:10 UTC';
   logActionMessage: string = 'Admin Account (Sarah Stone) updated tuition fee waiver status flags for 14 scholarship applicants.';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    const stored = localStorage.getItem('totalStudents');
+    this.totalStudentsCount = stored ? parseInt(stored, 10) : 0;
+  }
 
   logout(): void {
     this.authService.logout();

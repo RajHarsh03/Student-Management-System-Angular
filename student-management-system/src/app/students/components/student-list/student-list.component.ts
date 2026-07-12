@@ -80,6 +80,7 @@ export class StudentListComponent implements OnInit, OnDestroy {
           this.allStudents.set(students);
           this.applyCurrentFilter();
           this.loading.set(false);
+          localStorage.setItem('totalStudents', String(students.length));
         },
         error: () => {
           this.errorMsg.set('Failed to load student data. Please try again.');
