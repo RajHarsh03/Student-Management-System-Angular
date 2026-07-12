@@ -1,0 +1,35 @@
+<div class="dashboard-container">
+  <aside class="sidebar">
+    <div class="logo-area"><h2>Student</h2></div>
+    <nav class="nav-links">
+      <a routerLink="/student-dashboard">Dashboard</a>
+      <a routerLink="/student/attendance">Attendance</a>
+      <a routerLink="/student/assessments">Assessments</a>
+      <a routerLink="/student/notices" class="active-link">Notices</a>
+      <a routerLink="/student/account">Account</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="top-header">
+      <div class="profile-info">
+        <button class="btn-logout" (click)="logout()">Logout</button>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="page-title-row">
+        <h1>Notices</h1>
+      </div>
+
+      <div class="notice-card card" *ngFor="let n of notices">
+        <div class="notice-meta">{{ n.date }}</div>
+        <p class="notice-text">{{ n.text }}</p>
+      </div>
+
+      <div class="empty-state card" *ngIf="notices.length === 0">
+        <p>No notices from admin yet.</p>
+      </div>
+    </div>
+  </main>
+</div>

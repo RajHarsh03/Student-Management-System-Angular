@@ -1,0 +1,38 @@
+.dashboard-container { display:flex; font-family:'Segoe UI',sans-serif; background:#dde8f0; min-height:100vh; color:#333; }
+.sidebar { width:240px; background:#0d2248; color:white; display:flex; flex-direction:column; padding:20px; position:fixed; top:0; left:0; height:100vh; overflow-y:auto; z-index:100; }
+.logo-area h2 { margin-top:10px; margin-bottom:40px; font-size:22px; text-align:center; letter-spacing:1px; }
+.nav-links { display:flex; flex-direction:column; gap:15px; }
+.nav-links a { color:#b2d4e8; text-decoration:none; padding:12px 15px; border-radius:8px; transition:background 0.2s; }
+.nav-links a:hover, .nav-links .active-link { background:#17c3d4; color:white; font-weight:bold; }
+.main-content { flex:1; display:flex; flex-direction:column; margin-left:240px; min-height:100vh; }
+.top-header { background:#eef2f7; height:70px; display:flex; justify-content:flex-end; align-items:center; padding:0 30px; box-shadow:0 2px 4px rgba(0,0,0,0.05); }
+.btn-logout { background:#17c3d4; color:white; border:none; padding:8px 20px; border-radius:6px; font-size:14px; font-weight:600; cursor:pointer; }
+.btn-logout:hover { opacity:0.85; }
+.page-body { padding:30px; }
+.page-title-row { margin-bottom:24px; }
+.page-title-row h1 { font-size:24px; color:#0d2248; font-weight:700; }
+
+.card { background:#eef2f7; border-radius:12px; padding:20px; box-shadow:0 4px 6px rgba(0,0,0,0.05); margin-bottom:16px; }
+
+.assessment-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; }
+.assessment-title { font-size:16px; font-weight:700; color:#0d2248; margin:0 0 4px; }
+.assessment-subject { font-size:13px; color:#64748b; margin:0; }
+
+.submitted-badge { background:#d1fae5; color:#065f46; font-size:12px; font-weight:700; padding:4px 12px; border-radius:20px; white-space:nowrap; }
+
+.deadline { font-size:13px; color:#475569; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+.deadline.urgent { color:#b45309; font-weight:600; }
+.urgent-tag { background:#fef3c7; color:#b45309; font-size:11px; font-weight:700; padding:2px 10px; border-radius:20px; border:1px solid #f59e0b; }
+
+.assessment-actions { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+
+.btn-upload { display:inline-block; background:#dde8f0; color:#0d2248; border:1.5px solid #17c3d4; padding:8px 16px; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; transition:background 0.2s; }
+.btn-upload:hover { background:#c7dce8; }
+
+.btn-submit { background:#17c3d4; color:white; border:none; padding:8px 20px; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; }
+.btn-submit:hover:not(:disabled) { opacity:0.85; }
+.btn-submit:disabled { background:#a0cdd2; cursor:not-allowed; }
+
+.submitted-file { font-size:13px; color:#0d9488; margin:0; }
+
+@media(max-width:768px) { .sidebar { position:relative; width:100%; height:auto; } .main-content { margin-left:0; } }

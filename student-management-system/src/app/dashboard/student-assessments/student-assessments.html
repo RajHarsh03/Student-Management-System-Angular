@@ -1,0 +1,53 @@
+<div class="dashboard-container">
+  <aside class="sidebar">
+    <div class="logo-area"><h2>Student</h2></div>
+    <nav class="nav-links">
+      <a routerLink="/student-dashboard">Dashboard</a>
+      <a routerLink="/student/attendance">Attendance</a>
+      <a routerLink="/student/assessments" class="active-link">Assessments</a>
+      <a routerLink="/student/notices">Notices</a>
+      <a routerLink="/student/account">Account</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="top-header">
+      <div class="profile-info">
+        <button class="btn-logout" (click)="logout()">Logout</button>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="page-title-row">
+        <h1>Assessments</h1>
+      </div>
+
+      <div class="assessment-card card" *ngFor="let a of assessments">
+        <div class="assessment-header">
+          <div>
+            <h3 class="assessment-title">{{ a.title }}</h3>
+            <p class="assessment-subject">{{ a.subject }}</p>
+          </div>
+          <span class="submitted-badge" *ngIf="a.submitted">Submitted</span>
+        </div>
+
+        <div class="deadline" [class.urgent]="a.isUrgent">
+          Deadline: {{ a.deadline }}
+          <span class="urgent-tag" *ngIf="a.isUrgent">Urgent</span>
+        </div>
+
+        <div class="assessment-actions" *ngIf="!a.submitted">
+          <label class="btn-upload">
+            {{ a.fileName ? a.fileName : 'Upload File' }}
+            <input type="file" (change)="onFileSelect($event, a)" hidden />
+          </label>
+          <button class="btn-submit" (click)="submit(a)" [disabled]="!a.fileName">Submit</button>
+        </div>
+
+        <p class="submitted-file" *ngIf="a.submitted">
+          Submitted: <strong>{{ a.fileName }}</strong>
+        </p>
+      </div>
+    </div>
+  </main>
+</div>

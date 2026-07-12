@@ -1,0 +1,68 @@
+<div class="dashboard-container">
+  <aside class="sidebar">
+    <div class="logo-area"><h2>Student</h2></div>
+    <nav class="nav-links">
+      <a routerLink="/student-dashboard">Dashboard</a>
+      <a routerLink="/student/attendance" class="active-link">Attendance</a>
+      <a routerLink="/student/assessments">Assessments</a>
+      <a routerLink="/student/notices">Notices</a>
+      <a routerLink="/student/account">Account</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="top-header">
+      <div class="profile-info">
+        <button class="btn-logout" (click)="logout()">Logout</button>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="page-title-row">
+        <h1>Attendance</h1>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card total">
+          <span class="stat-number">{{ total }}</span>
+          <span class="stat-label">Total Classes</span>
+        </div>
+        <div class="stat-card present">
+          <span class="stat-number">{{ present }}</span>
+          <span class="stat-label">Present</span>
+        </div>
+        <div class="stat-card absent">
+          <span class="stat-number">{{ absent }}</span>
+          <span class="stat-label">Absent</span>
+        </div>
+        <div class="stat-card percent">
+          <span class="stat-number">{{ percentage }}%</span>
+          <span class="stat-label">Attendance</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Subject</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let r of records">
+              <td>{{ r.date }}</td>
+              <td>{{ r.subject }}</td>
+              <td>
+                <span class="status-badge" [class.present]="r.status === 'Present'" [class.absent]="r.status === 'Absent'">
+                  {{ r.status }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>

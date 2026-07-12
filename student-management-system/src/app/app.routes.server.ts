@@ -8,5 +8,9 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'admin/students/edit/:id', renderMode: RenderMode.Client },
   { path: 'admin/notices',           renderMode: RenderMode.Client },
   { path: 'admin/account',           renderMode: RenderMode.Client },
+  { path: 'student/attendance',      renderMode: RenderMode.Client },
+  { path: 'student/assessments',     renderMode: RenderMode.Client },
+  { path: 'student/notices',         renderMode: RenderMode.Client },
+  { path: 'student/account',         renderMode: RenderMode.Client },
   { path: '**',                      renderMode: RenderMode.Prerender }
 ];
