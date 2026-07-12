@@ -22,12 +22,17 @@ interface Assessment {
 })
 export class StudentAssessmentsComponent {
 
-  assessments: Assessment[] = [
-    { id: 1, title: 'Angular Components Assignment', subject: 'Introduction to Angular', deadline: '2026-07-15', submitted: false, fileName: '', isUrgent: false },
-    { id: 2, title: 'Binary Trees Lab Report',       subject: 'Data Structures',          deadline: '2026-07-12', submitted: false, fileName: '', isUrgent: true  },
-    { id: 3, title: 'SQL Query Practice',            subject: 'Database Management',      deadline: '2026-07-20', submitted: true,  fileName: 'sql_practice.pdf', isUrgent: false },
-    { id: 4, title: 'UI Design Mockup',              subject: 'Introduction to Angular',  deadline: '2026-07-10', submitted: false, fileName: '', isUrgent: true  },
-  ];
+  assessments: Assessment[] = [];
+
+  constructor(private authService: AuthService) {
+    const stored = localStorage.getItem('adminAssessments');
+    const adminList = stored ? JSON.parse(stored) : [];
+    this.assessments = adminList.map((a: any) => ({
+      ...a,
+      submitted: false,
+      fileName: ''
+    }));
+  }
 
   onFileSelect(event: Event, assessment: Assessment): void {
     const input = event.target as HTMLInputElement;
@@ -40,8 +45,6 @@ export class StudentAssessmentsComponent {
     if (!assessment.fileName) return;
     assessment.submitted = true;
   }
-
-  constructor(private authService: AuthService) {}
 
   logout(): void { this.authService.logout(); }
 }

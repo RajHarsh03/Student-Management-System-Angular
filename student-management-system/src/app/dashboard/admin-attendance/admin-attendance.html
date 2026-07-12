@@ -1,0 +1,72 @@
+<div class="dashboard-container">
+  <aside class="sidebar">
+    <div class="logo-area"><h2>Admin</h2></div>
+    <nav class="nav-links">
+      <a routerLink="/admin-dashboard">Dashboard</a>
+      <a routerLink="/admin/students">Manage Students</a>
+      <a routerLink="/admin/attendance" class="active-link">Manage Attendance</a>
+      <a routerLink="/admin/assessments">Manage Assessments</a>
+      <a routerLink="/admin/notices">Manage Notices</a>
+      <a routerLink="/admin/account">Account</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="top-header">
+      <div class="profile-info">
+        <button class="btn-logout" (click)="logout()">Logout</button>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="page-title-row">
+        <div>
+          <h1>Manage Attendance</h1>
+          <p class="date-label">Date: {{ today }}</p>
+        </div>
+        <div class="title-actions">
+          <button class="btn-mark-all present" (click)="markAll('Present')">Mark All Present</button>
+          <button class="btn-mark-all absent" (click)="markAll('Absent')">Mark All Absent</button>
+        </div>
+      </div>
+
+      <div class="success-banner" *ngIf="saved">
+        Attendance saved for {{ today }}!
+      </div>
+
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of rows">
+              <td><span class="id-badge">{{ row.id }}</span></td>
+              <td><strong>{{ row.name }}</strong></td>
+              <td>
+                <span *ngIf="row.status" class="status-badge" [class.present]="row.status === 'Present'" [class.absent]="row.status === 'Absent'">
+                  {{ row.status }}
+                </span>
+                <span *ngIf="!row.status" class="status-badge unmarked">Not Marked</span>
+              </td>
+              <td class="action-cell">
+                <button class="btn-present" (click)="mark(row, 'Present')" [class.active]="row.status === 'Present'">Present</button>
+                <button class="btn-absent" (click)="mark(row, 'Absent')" [class.active]="row.status === 'Absent'">Absent</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="save-row">
+        <span class="marked-info">{{ markedCount }} / {{ rows.length }} marked</span>
+        <button class="btn-save" (click)="save()">Save Attendance</button>
+      </div>
+    </div>
+  </main>
+</div>

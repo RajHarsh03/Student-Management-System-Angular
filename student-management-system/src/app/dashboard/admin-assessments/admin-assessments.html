@@ -1,0 +1,77 @@
+<div class="dashboard-container">
+  <aside class="sidebar">
+    <div class="logo-area"><h2>Admin</h2></div>
+    <nav class="nav-links">
+      <a routerLink="/admin-dashboard">Dashboard</a>
+      <a routerLink="/admin/students">Manage Students</a>
+      <a routerLink="/admin/attendance">Manage Attendance</a>
+      <a routerLink="/admin/assessments" class="active-link">Manage Assessments</a>
+      <a routerLink="/admin/notices">Manage Notices</a>
+      <a routerLink="/admin/account">Account</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="top-header">
+      <div class="profile-info">
+        <button class="btn-logout" (click)="logout()">Logout</button>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="page-title-row">
+        <h1>Manage Assessments</h1>
+        <button class="btn-primary-action" (click)="showForm = !showForm">+ New Assessment</button>
+      </div>
+
+      <div class="card form-card" *ngIf="showForm">
+        <h3>Upload New Assessment</h3>
+
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" [(ngModel)]="form.title" placeholder="e.g. Angular Components Assignment" />
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" [(ngModel)]="form.subject" placeholder="e.g. Introduction to Angular" />
+        </div>
+        <div class="form-group">
+          <label>Deadline</label>
+          <input type="date" [(ngModel)]="form.deadline" />
+        </div>
+        <div class="form-group">
+          <label>Question File</label>
+          <label class="btn-upload">
+            {{ form.fileName || 'Choose file' }}
+            <input type="file" (change)="onFile($event)" hidden />
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn-save" (click)="save()">Save Assessment</button>
+          <button class="btn-cancel" (click)="showForm = false">Cancel</button>
+        </div>
+      </div>
+
+      <div class="success-banner" *ngIf="saved">Assessment saved successfully!</div>
+
+      <div class="assessment-card card" *ngFor="let a of assessments">
+        <div class="a-header">
+          <div>
+            <h3 class="a-title">{{ a.title }}</h3>
+            <p class="a-subject">{{ a.subject }}</p>
+          </div>
+          <span class="deadline-badge" [class.urgent]="a.isUrgent">
+            {{ a.deadline }} <span *ngIf="a.isUrgent" class="urgent-tag">Urgent</span>
+          </span>
+        </div>
+        <p class="file-name">File: <strong>{{ a.fileName }}</strong></p>
+        <button class="btn-delete" (click)="delete(a.id)">Delete</button>
+      </div>
+
+      <div class="empty card" *ngIf="assessments.length === 0 && !showForm">
+        <p>No assessments yet. Click <strong>+ New Assessment</strong> to add one.</p>
+      </div>
+    </div>
+  </main>
+</div>
