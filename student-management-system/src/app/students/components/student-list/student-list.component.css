@@ -1,16 +1,14 @@
-/* ── Layout — mirrors dashboard branch exactly ────── */
 .dashboard-container {
   display: flex;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f7fa;
+  background-color: #dde8f0;
   min-height: 100vh;
   color: #333;
 }
 
-/* Admin sidebar — #3B2475 midnight purple (same as admin-dashboard.css) */
 .sidebar {
   width: 240px;
-  background-color: #3B2475;
+  background-color: #0d2248;
   color: white;
   display: flex;
   flex-direction: column;
@@ -33,21 +31,19 @@
 }
 
 .nav-links a {
-  color: #e6e0f8;
+  color: #b2d4e8;
   text-decoration: none;
   padding: 12px 15px;
   border-radius: 8px;
   transition: background 0.2s;
 }
 
-.nav-links a:hover,
-.nav-links .active-link {
-  background-color: #271454;
+.nav-links a:hover, .nav-links .active-link {
+  background-color: #17c3d4;
   color: white;
   font-weight: bold;
 }
 
-/* Main content */
 .main-content {
   flex: 1;
   display: flex;
@@ -56,7 +52,7 @@
 }
 
 .top-header {
-  background-color: white;
+  background-color: #eef2f7;
   height: 70px;
   display: flex;
   justify-content: flex-end;
@@ -67,9 +63,8 @@
 
 .profile-info { display: flex; align-items: center; gap: 20px; }
 .bell-icon { font-size: 20px; cursor: pointer; }
-.user-name { font-weight: 600; color: #3B2475; }
+.user-name { font-weight: 600; color: #0d2248; }
 
-/* Page body */
 .page-body { padding: 30px; }
 
 .page-title-row {
@@ -83,12 +78,12 @@
 
 .page-title-row h1 {
   font-size: 24px;
-  color: #3B2475;
+  color: #0d2248;
   font-weight: 700;
 }
 
 .btn-primary-action {
-  background-color: #3B2475;
+  background-color: #17c3d4;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -101,7 +96,6 @@
 }
 .btn-primary-action:hover { opacity: 0.85; }
 
-/* Search */
 .search-wrap {
   position: relative;
   max-width: 380px;
@@ -118,43 +112,40 @@
 .search-input {
   width: 100%;
   padding: 10px 16px 10px 36px;
-  border: 1px solid #ddd;
+  border: 1.5px solid #17c3d4;
   border-radius: 20px;
   font-size: 14px;
   outline: none;
   transition: border-color 0.2s;
+  background: #ffffff;
 }
-.search-input:focus { border-color: #3B2475; }
-.field-error { color: #dc3545; font-size: 12px; margin-top: 4px; }
+.search-input:focus { border-color: #0d2248; box-shadow: 0 0 0 3px rgba(23,195,212,0.18); }
+.field-error { color: #ef4444; font-size: 12px; margin-top: 4px; }
 
-/* Spinner */
 .spinner-wrap { display: flex; justify-content: center; padding: 40px; }
 .spinner {
   width: 40px; height: 40px;
-  border: 4px solid #e9ecef;
-  border-top-color: #3B2475;
+  border: 4px solid #dde8f0;
+  border-top-color: #17c3d4;
   border-radius: 50%;
   animation: spin .7s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Error */
-.error-msg { color: #dc3545; padding: 16px 0; font-size: 14px; }
+.error-msg { color: #ef4444; padding: 16px 0; font-size: 14px; }
 
-/* Card */
 .card {
-  background-color: white;
+  background-color: #eef2f7;
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
-/* Table */
 .table-wrap { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
 
 thead th {
-  background-color: #3B2475;
+  background-color: #0d2248;
   color: white;
   padding: 13px 16px;
   text-align: left;
@@ -162,14 +153,14 @@ thead th {
   white-space: nowrap;
 }
 
-tbody tr { border-bottom: 1px solid #f0f0f0; transition: background 0.15s; }
-tbody tr:hover { background: #f8f6ff; }
+tbody tr { border-bottom: 1px solid #c7dce8; transition: background 0.15s; }
+tbody tr:hover { background: #dde8f0; }
 tbody td { padding: 12px 16px; vertical-align: middle; }
 
 .id-badge {
   display: inline-block;
-  background: #ede8ff;
-  color: #3B2475;
+  background: #dde8f0;
+  color: #0d2248;
   padding: 3px 10px;
   border-radius: 20px;
   font-size: 12px;
@@ -180,9 +171,8 @@ tbody td { padding: 12px 16px; vertical-align: middle; }
 .empty-state { padding: 48px 20px; color: #888; }
 .empty-state span { font-size: 2.5rem; display: block; margin-bottom: 8px; }
 
-/* Row action buttons — matches admin-dashboard.css */
 .btn-edit {
-  background-color: #3B2475;
+  background-color: #17c3d4;
   color: white;
   border: none;
   padding: 7px 13px;
@@ -193,7 +183,7 @@ tbody td { padding: 12px 16px; vertical-align: middle; }
   transition: opacity 0.2s;
 }
 .btn-delete {
-  background-color: #dc3545;
+  background-color: #ef4444;
   color: white;
   border: none;
   padding: 7px 13px;
@@ -204,7 +194,6 @@ tbody td { padding: 12px 16px; vertical-align: middle; }
 }
 .btn-edit:hover, .btn-delete:hover { opacity: 0.85; }
 
-/* Modal */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -218,30 +207,29 @@ tbody td { padding: 12px 16px; vertical-align: middle; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 .modal {
-  background: white;
+  background: #eef2f7;
   border-radius: 14px;
   padding: 32px;
   max-width: 440px;
   width: 90%;
   box-shadow: 0 8px 30px rgba(0,0,0,.18);
 }
-.modal h3 { font-size: 1.1rem; margin-bottom: 10px; color: #3B2475; }
+.modal h3 { font-size: 1.1rem; margin-bottom: 10px; color: #0d2248; }
 .modal p  { color: #666; margin-bottom: 24px; line-height: 1.5; font-size: 14px; }
 
 .modal-actions { display: flex; gap: 12px; justify-content: flex-end; }
 .btn-cancel {
-  background: #e9ecef; color: #495057; border: none;
+  background: #dde8f0; color: #0d2248; border: none;
   padding: 9px 18px; border-radius: 8px; font-weight: 600;
   cursor: pointer; font-size: 14px;
 }
 .btn-delete-confirm {
-  background: #dc3545; color: white; border: none;
+  background: #ef4444; color: white; border: none;
   padding: 9px 18px; border-radius: 8px; font-weight: 600;
   cursor: pointer; font-size: 14px;
 }
 .btn-cancel:disabled, .btn-delete-confirm:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* Responsive */
 @media (max-width: 768px) {
   .dashboard-container { flex-direction: column; }
   .sidebar { width: 100%; }

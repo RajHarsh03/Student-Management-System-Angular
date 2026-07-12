@@ -6,18 +6,13 @@
     <nav class="nav-links">
       <a routerLink="/admin-dashboard" class="active-link">Dashboard</a>
       <a routerLink="/admin/students">Manage Students</a>
-      <a href="#" (click)="logout()">Logout</a>
     </nav>
   </aside>
 
   <main class="main-content">
     <header class="top-header">
-      <!-- <div class="search-box">
-        <input type="text" placeholder="Search for courses, tasks, notices...">
-      </div> -->
       <div class="profile-info">
-        <span class="bell-icon">🔔</span>
-        <span class="user-name">Notifications</span>
+        <button class="btn-logout" (click)="logout()">Logout</button>
       </div>
     </header>
 
