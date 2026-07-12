@@ -1,23 +1,33 @@
 <div class="page">
-
   <div class="cyan-accent"></div>
 
   <div class="main-panel">
 
     <div class="brand-section">
+      <img
+        src="images/sms-vector.jpg"
+        alt="Student Management Logo"
+        class="brand-logo">
+
       <div class="brand-text">
-        <p class="brand-title">STUDENT MANAGEMENT</p>
-        <p class="brand-subtitle">SYSTEM</p>
+        <h1 class="brand-title">STUDENT MANAGEMENT</h1>
+        <h2 class="brand-subtitle">SYSTEM</h2>
       </div>
-      <p class="brand-tagline">A centralized platform for managing student records, courses, and academic progress.</p>
+
+      <div class="title-line"></div>
+
+      <p class="brand-tagline">
+        A centralized platform for managing student records,
+        courses, and academic progress.
+      </p>
     </div>
 
     <div class="form-section">
 
-      <div class="form-mode-label">
+      <h3 class="form-mode-label">
         <span *ngIf="!isAdminMode">Student Login</span>
         <span *ngIf="isAdminMode">Admin Login</span>
-      </div>
+      </h3>
 
       <div class="error-banner" *ngIf="errorMessage">
         {{ errorMessage }}
@@ -32,8 +42,8 @@
             type="text"
             formControlName="username"
             [placeholder]="isAdminMode ? 'Enter admin username' : 'Enter student username'"
-            [class.input-error]="username.invalid && username.touched"
-          />
+            [class.input-error]="username.invalid && username.touched">
+
           <span class="field-error" *ngIf="username.invalid && username.touched">
             Username is required.
           </span>
@@ -47,44 +57,56 @@
               [type]="showPassword ? 'text' : 'password'"
               formControlName="password"
               placeholder="Enter your password"
-              [class.input-error]="password.invalid && password.touched"
-            />
-            <button type="button" class="eye-btn" (click)="togglePassword()">
-              <!-- eye open — password visible -->
+              [class.input-error]="password.invalid && password.touched">
+
+            <button
+              type="button"
+              class="eye-btn"
+              (click)="togglePassword()"
+              aria-label="Toggle password visibility">
+
               <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
               </svg>
-              <!-- eye off — password hidden -->
+
               <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>
               </svg>
             </button>
           </div>
+
           <span class="field-error" *ngIf="password.invalid && password.touched">
             <span *ngIf="password.hasError('required')">Password is required.</span>
             <span *ngIf="password.hasError('minlength')">Minimum 6 characters required.</span>
           </span>
         </div>
 
-        <button type="submit" class="btn-login" [disabled]="loginForm.invalid">
+        <button
+          type="submit"
+          class="btn-login"
+          [disabled]="loginForm.invalid">
           Login
         </button>
-
       </form>
 
-      <button type="button" class="admin-login-toggle" (click)="toggleMode()">
+      <button
+        type="button"
+        class="admin-login-toggle"
+        (click)="toggleMode()">
         <span *ngIf="!isAdminMode">Login as Admin?</span>
         <span *ngIf="isAdminMode">Login as Student?</span>
       </button>
 
       <div class="demo-access">
-        <p class="demo-label">Demo access</p>
+        <p class="demo-label">Demo Access</p>
+
         <div class="demo-row">
-          <span class="demo-badge admin">Admin</span>
+          <span class="demo-badge admin">ADMIN</span>
           <span class="demo-creds">admin / admin123</span>
         </div>
+
         <div class="demo-row">
-          <span class="demo-badge student">Student</span>
+          <span class="demo-badge student">STUDENT</span>
           <span class="demo-creds">student / student123</span>
         </div>
       </div>
