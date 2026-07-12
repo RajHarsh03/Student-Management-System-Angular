@@ -1,0 +1,58 @@
+.dashboard-container {
+  display: flex;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #dde8f0;
+  min-height: 100vh;
+  color: #333;
+}
+
+.sidebar {
+  width: 240px;
+  background-color: #0d2248;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.logo-area h2 { margin-top:10px; margin-bottom:40px; font-size:22px; text-align:center; letter-spacing:1px; }
+.nav-links { display:flex; flex-direction:column; gap:15px; }
+.nav-links a { color:#b2d4e8; text-decoration:none; padding:12px 15px; border-radius:8px; transition:background 0.2s; }
+.nav-links a:hover, .nav-links .active-link { background-color:#17c3d4; color:white; font-weight:bold; }
+
+.main-content { flex:1; display:flex; flex-direction:column; margin-left:240px; min-height:100vh; }
+.top-header { background:#eef2f7; height:70px; display:flex; justify-content:flex-end; align-items:center; padding:0 30px; box-shadow:0 2px 4px rgba(0,0,0,0.05); }
+.profile-info { display:flex; align-items:center; }
+
+.btn-logout { background-color:#17c3d4; color:white; border:none; padding:8px 20px; border-radius:6px; font-size:14px; font-weight:600; cursor:pointer; }
+.btn-logout:hover { opacity:0.85; }
+
+.page-body { padding:30px; }
+.page-title-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; }
+.page-title-row h1 { font-size:24px; color:#0d2248; font-weight:700; }
+
+.btn-primary-action { background-color:#17c3d4; color:white; border:none; padding:10px 20px; border-radius:8px; font-weight:600; font-size:14px; cursor:pointer; }
+.btn-primary-action:hover { opacity:0.85; }
+
+.card { background:#eef2f7; border-radius:12px; padding:20px; box-shadow:0 4px 6px rgba(0,0,0,0.05); margin-bottom:16px; }
+
+.notice-form textarea { width:100%; padding:10px 12px; border:1.5px solid #17c3d4; border-radius:6px; font-size:14px; font-family:inherit; outline:none; resize:vertical; background:#fff; }
+.notice-form-actions { display:flex; gap:10px; margin-top:10px; }
+
+.btn-submit-notice { background:#17c3d4; color:white; border:none; padding:8px 18px; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; }
+.btn-cancel-notice { background:#dde8f0; color:#0d2248; border:none; padding:8px 18px; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; }
+
+.notice-meta { font-size:12px; color:#94a3b8; margin-bottom:6px; }
+.notice-text { font-size:14px; color:#1e293b; margin-bottom:10px; line-height:1.6; }
+
+.btn-delete-notice { background:#ef4444; color:white; border:none; padding:5px 14px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer; }
+.btn-delete-notice:hover { opacity:0.85; }
+
+.empty-state p { color:#64748b; font-size:14px; }

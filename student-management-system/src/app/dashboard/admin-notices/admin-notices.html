@@ -1,0 +1,50 @@
+<div class="dashboard-container">
+  <aside class="sidebar">
+    <div class="logo-area"><h2>Admin</h2></div>
+    <nav class="nav-links">
+      <a routerLink="/admin-dashboard">Dashboard</a>
+      <a routerLink="/admin/students">Manage Students</a>
+      <a routerLink="/admin/notices" class="active-link">Manage Notices</a>
+      <a routerLink="/admin/account">Account</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="top-header">
+      <div class="profile-info">
+        <button class="btn-logout" routerLink="/login">Logout</button>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="page-title-row">
+        <h1>Manage Notices</h1>
+        <button class="btn-primary-action" (click)="showForm = !showForm">+ Post Notice</button>
+      </div>
+
+      <div class="notice-form card" *ngIf="showForm">
+        <textarea
+          [(ngModel)]="newNotice"
+          placeholder="Type your notice here..."
+          rows="4">
+        </textarea>
+        <div class="notice-form-actions">
+          <button class="btn-submit-notice" (click)="postNotice()">Post</button>
+          <button class="btn-cancel-notice" (click)="showForm = false; newNotice = ''">Cancel</button>
+        </div>
+      </div>
+
+      <div class="notices-list" *ngIf="notices.length > 0">
+        <div class="notice-card card" *ngFor="let notice of notices; let i = index">
+          <div class="notice-meta">{{ notice.date }}</div>
+          <p class="notice-text">{{ notice.text }}</p>
+          <button class="btn-delete-notice" (click)="deleteNotice(i)">Delete</button>
+        </div>
+      </div>
+
+      <div class="empty-state card" *ngIf="notices.length === 0 && !showForm">
+        <p>No notices posted yet. Click <strong>+ Post Notice</strong> to add one.</p>
+      </div>
+    </div>
+  </main>
+</div>

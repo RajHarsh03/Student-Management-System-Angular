@@ -45,7 +45,10 @@ export class AdminDashboard {
 
   submitNotice(): void {
     if (!this.noticeText.trim()) return;
-    localStorage.setItem('systemNotice', this.noticeText.trim());
+    const existing = localStorage.getItem('adminNotices');
+    const notices = existing ? JSON.parse(existing) : [];
+    notices.unshift({ text: this.noticeText.trim(), date: new Date().toLocaleString() });
+    localStorage.setItem('adminNotices', JSON.stringify(notices));
     this.showNoticeForm = false;
     this.noticeText = '';
   }

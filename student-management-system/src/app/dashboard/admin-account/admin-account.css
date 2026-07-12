@@ -1,0 +1,76 @@
+.dashboard-container {
+  display: flex;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #dde8f0;
+  min-height: 100vh;
+  color: #333;
+}
+
+.sidebar {
+  width: 240px;
+  background-color: #0d2248;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.logo-area h2 { margin-top:10px; margin-bottom:40px; font-size:22px; text-align:center; letter-spacing:1px; }
+.nav-links { display:flex; flex-direction:column; gap:15px; }
+.nav-links a { color:#b2d4e8; text-decoration:none; padding:12px 15px; border-radius:8px; transition:background 0.2s; }
+.nav-links a:hover, .nav-links .active-link { background-color:#17c3d4; color:white; font-weight:bold; }
+
+.main-content { flex:1; display:flex; flex-direction:column; margin-left:240px; min-height:100vh; }
+.top-header { background:#eef2f7; height:70px; display:flex; justify-content:flex-end; align-items:center; padding:0 30px; box-shadow:0 2px 4px rgba(0,0,0,0.05); }
+.profile-info { display:flex; align-items:center; }
+
+.btn-logout { background-color:#17c3d4; color:white; border:none; padding:8px 20px; border-radius:6px; font-size:14px; font-weight:600; cursor:pointer; }
+.btn-logout:hover { opacity:0.85; }
+
+.page-body { padding:30px; }
+.page-title-row { margin-bottom:24px; }
+.page-title-row h1 { font-size:24px; color:#0d2248; font-weight:700; }
+
+.card { background:#eef2f7; border-radius:12px; padding:20px; box-shadow:0 4px 6px rgba(0,0,0,0.05); }
+
+.account-card { max-width:480px; }
+
+.account-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid #c7dce8;
+}
+
+.account-row:last-child { border-bottom: none; }
+
+.account-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.account-value {
+  font-size: 15px;
+  color: #0d2248;
+  font-weight: 500;
+}
+
+.role-badge {
+  background: #dde8f0;
+  color: #17c3d4;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+}
