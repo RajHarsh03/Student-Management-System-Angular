@@ -84,8 +84,11 @@ export class StudentFormComponent implements OnInit, OnDestroy {
       : this.studentService.createStudent(value);
 
     request$.pipe(takeUntil(this.destroy$)).subscribe({
-      next: () => {
+      next: student => {
         this.submitting.set(false);
+        if (!this.isEditMode()) {
+          this.recordEnrollment(student.id);
+        }
         this.toastService.show(
           this.isEditMode() ? 'Student updated successfully.' : 'Student added successfully.',
           'success'
@@ -100,6 +103,13 @@ export class StudentFormComponent implements OnInit, OnDestroy {
         );
       }
     });
+  }
+
+  private recordEnrollment(studentId: string): void {
+    const stored = localStorage.getItem('studentEnrollmentHistory');
+    const history = stored ? JSON.parse(stored) as Array<{ studentId: string; date: string }> : [];
+    history.push({ studentId, date: new Date().toISOString() });
+    localStorage.setItem('studentEnrollmentHistory', JSON.stringify(history));
   }
 
   onCancel(): void {

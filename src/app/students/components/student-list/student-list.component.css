@@ -1,259 +1,40 @@
-.dashboard-container {
-  display: flex;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #dde8f0;
+:host {
+  display: block;
   min-height: 100vh;
-  color: #333;
 }
 
-.sidebar {
-  width: 240px;
-  background-color: #0d2248;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  flex-shrink: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  overflow-y: auto;
-  z-index: 100;
+.student-table-card {
+  padding: 0;
+  overflow: hidden;
 }
 
-.logo-area h2 {
-  margin-top: 10px;
-  margin-bottom: 40px;
-  font-size: 22px;
+.student-table-card th:last-child {
+  width: 190px;
   text-align: center;
-  letter-spacing: 1px;
 }
 
-.nav-links {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+.student-actions-heading {
+  text-align: center;
 }
 
-.nav-links a {
-  color: #b2d4e8;
-  text-decoration: none;
-  padding: 12px 15px;
-  border-radius: 8px;
-  transition: background 0.2s;
-}
-
-.nav-links a:hover, .nav-links .active-link {
-  background-color: #17c3d4;
-  color: white;
-  font-weight: bold;
-}
-
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  margin-left: 240px;
-  min-height: 100vh;
-  overflow-y: auto;
-}
-
-.top-header {
-  background-color: #eef2f7;
-  height: 70px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0 30px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.profile-info { display: flex; align-items: center; gap: 20px; }
-.bell-icon { font-size: 20px; cursor: pointer; }
-.user-name { font-weight: 600; color: #0d2248; }
-
-.page-body { padding: 30px; }
-
-.page-title-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.page-title-row h1 {
-  font-size: 24px;
-  color: #0d2248;
-  font-weight: 700;
-}
-
-.btn-primary-action {
-  background-color: #17c3d4;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: opacity 0.2s;
-}
-.btn-primary-action:hover { opacity: 0.85; }
-
-.search-wrap {
-  position: relative;
-  max-width: 380px;
-  margin-bottom: 20px;
-}
-.search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 14px;
-  color: #999;
-}
-.search-input {
-  width: 100%;
-  padding: 10px 16px 10px 36px;
-  border: 1.5px solid #17c3d4;
-  border-radius: 20px;
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.2s;
-  background: #ffffff;
-}
-.search-input:focus { border-color: #0d2248; box-shadow: 0 0 0 3px rgba(23,195,212,0.18); }
-.field-error { color: #ef4444; font-size: 12px; margin-top: 4px; }
-
-.spinner-wrap { display: flex; justify-content: center; padding: 40px; }
-.spinner {
-  width: 40px; height: 40px;
-  border: 4px solid #dde8f0;
-  border-top-color: #17c3d4;
-  border-radius: 50%;
-  animation: spin .7s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.error-msg { color: #ef4444; padding: 16px 0; font-size: 14px; }
-
-.card {
-  background-color: #eef2f7;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-}
-
-.table-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-
-thead th {
-  background-color: #0d2248;
-  color: white;
-  padding: 13px 16px;
-  text-align: left;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-tbody tr { border-bottom: 1px solid #c7dce8; transition: background 0.15s; }
-tbody tr:hover { background: #dde8f0; }
-tbody td { padding: 12px 16px; vertical-align: middle; }
-
-.id-badge {
-  display: inline-block;
-  background: #dde8f0;
-  color: #0d2248;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.empty-cell { text-align: center; padding: 0; }
-.empty-state { padding: 48px 20px; color: #888; }
-.empty-state span { font-size: 2.5rem; display: block; margin-bottom: 8px; }
-
-.btn-edit {
-  background-color: #17c3d4;
-  color: white;
-  border: none;
-  padding: 7px 13px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 13px;
-  margin-right: 6px;
-  transition: opacity 0.2s;
-}
-.btn-delete {
-  background-color: #ef4444;
-  color: white;
-  border: none;
-  padding: 7px 13px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 13px;
-  transition: opacity 0.2s;
-}
-.btn-edit:hover, .btn-delete:hover { opacity: 0.85; }
-
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
+.student-row-actions {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 8888;
-  animation: fadeIn .2s ease;
-}
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-.modal {
-  background: #eef2f7;
-  border-radius: 14px;
-  padding: 32px;
-  max-width: 440px;
-  width: 90%;
-  box-shadow: 0 8px 30px rgba(0,0,0,.18);
-}
-.modal h3 { font-size: 1.1rem; margin-bottom: 10px; color: #0d2248; }
-.modal p  { color: #666; margin-bottom: 24px; line-height: 1.5; font-size: 14px; }
-
-.modal-actions { display: flex; gap: 12px; justify-content: flex-end; }
-.btn-cancel {
-  background: #dde8f0; color: #0d2248; border: none;
-  padding: 9px 18px; border-radius: 8px; font-weight: 600;
-  cursor: pointer; font-size: 14px;
-}
-.btn-delete-confirm {
-  background: #ef4444; color: white; border: none;
-  padding: 9px 18px; border-radius: 8px; font-weight: 600;
-  cursor: pointer; font-size: 14px;
-}
-.btn-cancel:disabled, .btn-delete-confirm:disabled { opacity: 0.5; cursor: not-allowed; }
-
-@media (max-width: 768px) {
-  .dashboard-container { flex-direction: column; }
-  .sidebar { width: 100%; }
-  .main-content { width: 100%; }
-  .page-body { padding: 15px; }
+  gap: 8px;
+  white-space: nowrap;
 }
 
-.btn-logout {
-  background-color: #17c3d4;
-  color: white;
-  border: none;
-  padding: 8px 20px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s;
+.student-row-actions .btn-edit,
+.student-row-actions .btn-delete {
+  min-width: 78px;
+  min-height: 40px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 12px;
 }
-.btn-logout:hover { opacity: 0.85; }
+
+.student-row-actions .btn-edit:hover,
+.student-row-actions .btn-delete:hover {
+  transform: translateY(-1px);
+}
