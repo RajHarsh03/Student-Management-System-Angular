@@ -13,10 +13,17 @@ export class StudentAccountComponent {
 
   username: string = '';
   name: string = '';
+  initials = '';
 
   constructor(private authService: AuthService) {
     this.username = this.authService.getUsername() || 'student';
     this.name = this.authService.getName() || 'Student';
+    this.initials = this.name
+      .split(/\s+/)
+      .map(part => part.charAt(0))
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
   }
 
   logout(): void { this.authService.logout(); }

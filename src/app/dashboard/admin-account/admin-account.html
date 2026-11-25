@@ -1,23 +1,22 @@
 <div class="dashboard-container">
-  <aside class="sidebar">
+  <aside class="sidebar admin-sidebar">
     <div class="logo-area"><h2>Admin</h2></div>
     <nav class="nav-links">
-      <a routerLink="/admin-dashboard">Dashboard</a>
-      <a routerLink="/admin/students">Manage Students</a>
-      <a routerLink="/admin/attendance">Manage Attendance</a>
-      <a routerLink="/admin/assessments">Manage Assessments</a>
-      <a routerLink="/admin/notices">Manage Notices</a>
-      <a routerLink="/admin/account" class="active-link">Account</a>
+      <a routerLink="/admin-dashboard"><span class="material-symbols-outlined" aria-hidden="true">dashboard</span>Dashboard</a>
+      <a routerLink="/admin/students"><span class="material-symbols-outlined" aria-hidden="true">group</span>Manage Students</a>
+      <a routerLink="/admin/attendance"><span class="material-symbols-outlined" aria-hidden="true">fact_check</span>Manage Attendance</a>
+      <a routerLink="/admin/assessments"><span class="material-symbols-outlined" aria-hidden="true">assignment</span>Manage Assessments</a>
+      <a routerLink="/admin/notices"><span class="material-symbols-outlined" aria-hidden="true">campaign</span>Manage Notices</a>
+      <a routerLink="/admin/account" class="active-link"><span class="material-symbols-outlined" aria-hidden="true">manage_accounts</span>Account</a>
     </nav>
+    <div class="sidebar-profile">
+      <div class="sidebar-avatar">AU</div>
+      <div class="sidebar-user-info"><strong>Admin User</strong><span>Administrator</span></div>
+      <button class="btn-logout" type="button" aria-label="Logout" (click)="logout()"></button>
+    </div>
   </aside>
 
   <main class="main-content">
-    <header class="top-header">
-      <div class="profile-info">
-        <button class="btn-logout" (click)="logout()">Logout</button>
-      </div>
-    </header>
-
     <div class="page-body">
       <div class="page-title-row">
         <h1>Account Details</h1>

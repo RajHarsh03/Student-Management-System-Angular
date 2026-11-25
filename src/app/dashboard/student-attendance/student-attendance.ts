@@ -17,6 +17,8 @@ interface AttendanceRecord {
   styleUrls: ['./student-attendance.css']
 })
 export class StudentAttendanceComponent {
+  studentName: string;
+  studentInitials: string;
 
   records: AttendanceRecord[] = [
     { date: '2026-07-01', subject: 'Introduction to Angular', status: 'Present' },
@@ -33,8 +35,26 @@ export class StudentAttendanceComponent {
   get present() { return this.records.filter(r => r.status === 'Present').length; }
   get absent()  { return this.records.filter(r => r.status === 'Absent').length; }
   get percentage() { return this.total ? Math.round((this.present / this.total) * 100) : 0; }
+  get subjectAttendance() {
+    return [...new Set(this.records.map(record => record.subject))].map(name => {
+      const subjectRecords = this.records.filter(record => record.subject === name);
+      const presentCount = subjectRecords.filter(record => record.status === 'Present').length;
+      return {
+        name,
+        percentage: Math.round((presentCount / subjectRecords.length) * 100)
+      };
+    });
+  }
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    this.studentName = this.authService.getName() || 'Student';
+    this.studentInitials = this.studentName
+      .split(/\s+/)
+      .map(part => part.charAt(0))
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
+  }
 
   logout(): void { this.authService.logout(); }
 }

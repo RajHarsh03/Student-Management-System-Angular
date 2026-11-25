@@ -12,22 +12,29 @@ import { AuthService } from '../../auth/auth.service';
 export class StudentDashboard {
 
   studentName: string = '';
+  studentInitials = '';
   totalAssignmentsDue: number = 3;
-  attendancePercentage: number = 92;
+  attendancePercentage: number = 88;
 
   currentCourseTitle: string = 'Introduction to Angular 21';
   instructorName: string = 'Shikha Prasad';
   nextClassTime: string = 'Monday at 10:00 AM';
 
-  todoItem1: string = 'Submit Angular Assignment 1';
-  todoItem2: string = 'Read Chapter 4 of UI Design Book';
-  todoItem3: string = 'Prepare for JavaScript Quiz';
+  todoItem1: string = 'Submit Binary Trees Lab Report';
+  todoItem2: string = 'Complete Angular Components Assignment';
+  todoItem3: string = 'Finish SQL Query Practice Sheet';
 
-  noticeTitle: string = 'Midterm Exam Schedule Posted';
-  noticeContent: string = 'The midterm examination timetable has been updated on the main university portal. Please verify your room details.';
+  noticeTitle: string = 'Mid-semester exam schedule released';
+  noticeContent: string = 'Theory and lab timetables starting 08 Dec 2026 are now finalized and available for download.';
 
   constructor(private authService: AuthService) {
     this.studentName = this.authService.getName() || 'Student';
+    this.studentInitials = this.studentName
+      .split(/\s+/)
+      .map(part => part.charAt(0))
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
   }
 
   logout(): void {

@@ -1,67 +1,93 @@
-<div class="dashboard-container">
-  <aside class="sidebar">
+<div class="dashboard-container student-portal">
+  <aside class="sidebar student-sidebar">
     <div class="logo-area"><h2>Student</h2></div>
     <nav class="nav-links">
-      <a routerLink="/student-dashboard">Dashboard</a>
-      <a routerLink="/student/attendance" class="active-link">Attendance</a>
-      <a routerLink="/student/assessments">Assessments</a>
-      <a routerLink="/student/notices">Notices</a>
-      <a routerLink="/student/account">Account</a>
+      <a routerLink="/student-dashboard"><span class="material-symbols-outlined" aria-hidden="true">dashboard</span>Dashboard</a>
+      <a routerLink="/student/attendance" class="active-link"><span class="material-symbols-outlined" aria-hidden="true">event_available</span>Attendance</a>
+      <a routerLink="/student/assessments"><span class="material-symbols-outlined" aria-hidden="true">assignment</span>Assessments</a>
+      <a routerLink="/student/notices"><span class="material-symbols-outlined" aria-hidden="true">notifications</span>Notices</a>
+      <a routerLink="/student/account"><span class="material-symbols-outlined" aria-hidden="true">person</span>Account</a>
     </nav>
+    <div class="sidebar-profile">
+      <div class="sidebar-avatar">{{ studentInitials }}</div>
+      <div class="sidebar-user-info"><strong>{{ studentName }}</strong><span>Student</span></div>
+      <button class="btn-logout" type="button" aria-label="Logout" (click)="logout()"></button>
+    </div>
   </aside>
 
   <main class="main-content">
     <header class="top-header">
-      <div class="profile-info">
-        <button class="btn-logout" (click)="logout()">Logout</button>
+      <h1 class="topbar-title">Attendance</h1>
+      <div class="page-header-tools">
+        <label class="header-search">
+          <span class="material-symbols-outlined" aria-hidden="true">search</span>
+          <input type="search" placeholder="Search..." aria-label="Search attendance">
+          <span class="material-symbols-outlined search-filter-icon" aria-hidden="true">tune</span>
+        </label>
+        <button class="header-icon-button" type="button" aria-label="Notifications">
+          <span class="material-symbols-outlined" aria-hidden="true">notifications</span>
+        </button>
+        <span class="header-avatar" [attr.aria-label]="studentName">{{ studentInitials }}</span>
       </div>
     </header>
 
     <div class="page-body">
-      <div class="page-title-row">
-        <h1>Attendance</h1>
-      </div>
+      <section class="student-attendance-stats" aria-label="Attendance totals">
+        <article class="student-stat-card">
+          <span class="student-icon-chip info"><span class="material-symbols-outlined" aria-hidden="true">calendar_month</span></span>
+          <div><span class="stat-label">Total Classes</span><strong class="stat-number">{{ total }}</strong></div>
+        </article>
+        <article class="student-stat-card">
+          <span class="student-icon-chip success"><span class="material-symbols-outlined" aria-hidden="true">check_circle</span></span>
+          <div><span class="stat-label">Present</span><strong class="stat-number">{{ present }}</strong></div>
+        </article>
+        <article class="student-stat-card">
+          <span class="student-icon-chip danger"><span class="material-symbols-outlined" aria-hidden="true">cancel</span></span>
+          <div><span class="stat-label">Absent</span><strong class="stat-number">{{ absent }}</strong></div>
+        </article>
+        <article class="student-stat-card">
+          <span class="student-icon-chip warning"><span class="material-symbols-outlined" aria-hidden="true">percent</span></span>
+          <div><span class="stat-label">Attendance</span><strong class="stat-number">{{ percentage }}%</strong></div>
+        </article>
+      </section>
 
-      <div class="stats-row">
-        <div class="stat-card total">
-          <span class="stat-number">{{ total }}</span>
-          <span class="stat-label">Total Classes</span>
+      <section class="card subject-attendance-card">
+        <h2>Subject-wise Attendance</h2>
+        <div class="subject-progress-grid">
+          <div class="subject-progress" *ngFor="let subject of subjectAttendance">
+            <div><span>{{ subject.name }}</span><strong>{{ subject.percentage }}%</strong></div>
+            <div class="course-progress-track" role="progressbar"
+              [attr.aria-label]="subject.name + ' attendance'"
+              [attr.aria-valuenow]="subject.percentage" aria-valuemin="0" aria-valuemax="100">
+              <span [style.width.%]="subject.percentage"></span>
+            </div>
+          </div>
         </div>
-        <div class="stat-card present">
-          <span class="stat-number">{{ present }}</span>
-          <span class="stat-label">Present</span>
-        </div>
-        <div class="stat-card absent">
-          <span class="stat-number">{{ absent }}</span>
-          <span class="stat-label">Absent</span>
-        </div>
-        <div class="stat-card percent">
-          <span class="stat-number">{{ percentage }}%</span>
-          <span class="stat-label">Attendance</span>
-        </div>
-      </div>
+      </section>
 
-      <div class="card">
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Subject</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let r of records">
-              <td>{{ r.date }}</td>
-              <td>{{ r.subject }}</td>
-              <td>
-                <span class="status-badge" [class.present]="r.status === 'Present'" [class.absent]="r.status === 'Absent'">
-                  {{ r.status }}
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="card student-attendance-table">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Subject</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let r of records">
+                <td>{{ r.date }}</td>
+                <td>{{ r.subject }}</td>
+                <td>
+                  <span class="status-badge" [class.present]="r.status === 'Present'" [class.absent]="r.status === 'Absent'">
+                    {{ r.status }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </main>
