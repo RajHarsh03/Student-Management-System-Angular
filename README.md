@@ -16,7 +16,7 @@ The main objective of this project is to build a structured Angular application 
 - Admin and student login
 - Logout
 - Fake JWT token simulation
-- Session storage using `localStorage`
+- Login token persisted in `localStorage`
 - Role storage using `localStorage`
 - Route protection using `AuthGuard`
 - Authorization header using a class-based HTTP interceptor
@@ -57,7 +57,7 @@ Student fields:
 
 ### Shared Module Scope
 
-The shared area is planned for reusable layout components:
+The shared area is a planned location for reusable layout components:
 
 - Header
 - Sidebar
@@ -69,10 +69,9 @@ Shared components should stay focused on layout and navigation. They should not 
 
 ### UI and Utility Scope
 
-The UI and utility area is planned for small reusable UI pieces:
+Toast notifications are implemented for student management. Other planned reusable UI pieces include:
 
 - Loading spinner
-- Toast notifications
 - Pagination
 - Search box
 - Form validation message component
@@ -116,51 +115,73 @@ These utilities should stay reusable and should not contain feature-specific bus
 ## Project Structure
 
 ```text
-student-management-system/
+.
+|-- .editorconfig
+|-- .gitignore
+|-- .prettierrc
+|-- .vscode/
+|   |-- extensions.json
+|   |-- launch.json
+|   |-- mcp.json
+|   `-- tasks.json
+|-- angular.json
 |-- db.json
 |-- package.json
+|-- package-lock.json
+|-- public/
+|   `-- favicon.ico
 |-- README.md
-`-- src/
-    `-- app/
-        |-- auth/
-        |   |-- login/
-        |   |-- auth-routing.module.ts
-        |   |-- auth.module.ts
-        |   |-- auth.service.ts
-        |   |-- auth.guard.ts
-        |   `-- auth.interceptor.ts
-        |-- dashboard/
-        |   |-- admin-dashboard/
-        |   |-- admin-attendance/
-        |   |-- admin-assessments/
-        |   |-- admin-notices/
-        |   |-- admin-account/
-        |   |-- student-dashboard/
-        |   |-- student-attendance/
-        |   |-- student-assessments/
-        |   |-- student-notices/
-        |   `-- student-account/
-        |-- students/
-        |   |-- components/
-        |   |   |-- student-list/
-        |   |   `-- student-form/
-        |   |-- services/
-        |   `-- students.routes.ts
-        |-- models/
-        |   `-- student.model.ts
-        |-- services/
-        |   `-- student.service.ts
-        |-- app.config.ts
-        |-- app.routes.ts
-        `-- app.routes.server.ts
+|-- src/
+|   |-- app/
+|   |   |-- auth/
+|   |   |   |-- login/
+|   |   |   |-- models/
+|   |   |   |-- services/
+|   |   |   |-- auth-routing.module.ts
+|   |   |   |-- auth.guard.ts
+|   |   |   |-- auth.interceptor.ts
+|   |   |   |-- auth.module.ts
+|   |   |   `-- auth.service.ts
+|   |   |-- dashboard/
+|   |   |   |-- admin-account/
+|   |   |   |-- admin-assessments/
+|   |   |   |-- admin-attendance/
+|   |   |   |-- admin-dashboard/
+|   |   |   |-- admin-notices/
+|   |   |   |-- student-account/
+|   |   |   |-- student-assessments/
+|   |   |   |-- student-attendance/
+|   |   |   |-- student-dashboard/
+|   |   |   `-- student-notices/
+|   |   |-- models/
+|   |   |   `-- student.model.ts
+|   |   |-- services/
+|   |   |   `-- student.service.ts
+|   |   |-- students/
+|   |   |   |-- components/
+|   |   |   |   |-- student-form/
+|   |   |   |   |-- student-list/
+|   |   |   |   `-- toast/
+|   |   |   |-- services/
+|   |   |   `-- students.routes.ts
+|   |   |-- app.config.server.ts
+|   |   |-- app.config.ts
+|   |   |-- app.routes.server.ts
+|   |   |-- app.routes.ts
+|   |   |-- app.ts
+|   |   |-- app.html
+|   |   `-- app.css
+|   |-- index.html
+|   |-- main.server.ts
+|   |-- main.ts
+|   |-- server.ts
+|   `-- styles.css
+|-- tsconfig.app.json
+|-- tsconfig.json
+`-- tsconfig.spec.json
 ```
 
-Planned integration areas:
-
-```text
-src/app/shared/
-src/app/ui/
-```
+The repository root is the Angular workspace. `src/app/dashboard/` contains the admin and student pages, while `src/app/students/` contains student CRUD routes, components, and toast UI. Shared layout and general-purpose UI folders have not been added yet.
 
 ## API Setup
 
@@ -182,11 +203,7 @@ The student service uses this API for:
 
 ## Getting Started
 
-Go inside the Angular project folder:
-
-```bash
-cd student-management-system
-```
+Run the following commands from the repository root.
 
 Install dependencies:
 
@@ -263,8 +280,8 @@ The following features have been added beyond the original plan.
 - Student signup form added to the login page — new students can register and their credentials are saved to `db.json` via the API
 - Login mode toggle — default view is Student Login, switch to Admin Login using the toggle button
 - Dynamic student login — students created via signup or added by admin can log in with their own credentials
-- Session persists on browser refresh — the app does not log out on page reload
-- Login API call has a 3-second timeout — if json-server is not running, the login fails quickly instead of hanging
+- Login state persists across browser refreshes using `localStorage`
+- Student signup and dynamic student login require the local JSON Server API to be running
 
 ### Admin Panel Updates
 
@@ -304,21 +321,21 @@ The student sidebar now includes the following pages:
 | Route | Access |
 | --- | --- |
 | `/login` | Public |
-| `/admin-dashboard` | Admin only |
-| `/admin/students` | Admin only |
-| `/admin/students/add` | Admin only |
-| `/admin/students/edit/:id` | Admin only |
-| `/admin/attendance` | Admin only |
-| `/admin/assessments` | Admin only |
-| `/admin/notices` | Admin only |
-| `/admin/account` | Admin only |
-| `/student-dashboard` | Student only |
-| `/student/attendance` | Student only |
-| `/student/assessments` | Student only |
-| `/student/notices` | Student only |
-| `/student/account` | Student only |
+| `/admin-dashboard` | Protected |
+| `/admin/students` | Protected |
+| `/admin/students/add` | Protected |
+| `/admin/students/edit/:id` | Protected |
+| `/admin/attendance` | Protected |
+| `/admin/assessments` | Protected |
+| `/admin/notices` | Protected |
+| `/admin/account` | Protected |
+| `/student-dashboard` | Protected |
+| `/student/attendance` | Protected |
+| `/student/assessments` | Protected |
+| `/student/notices` | Protected |
+| `/student/account` | Protected |
 
-All protected routes use `AuthGuard`. The server-side rendering config sets all dashboard and CRUD routes to client-side render mode to avoid localStorage conflicts with SSR.
+Protected routes use `AuthGuard` to check that a user is logged in. The server-side rendering config uses client-side rendering for dashboard and CRUD routes to avoid `localStorage` conflicts with SSR.
 
 ### Important API Note
 
