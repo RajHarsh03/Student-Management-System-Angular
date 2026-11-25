@@ -2,15 +2,11 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
+import { Assessment, DEFAULT_ASSESSMENTS } from '../../models/assessment.model';
 
-interface Assessment {
-  id: number;
-  title: string;
-  subject: string;
-  deadline: string;
+interface StudentAssessment extends Assessment {
   submitted: boolean;
   fileName: string;
-  isUrgent: boolean;
 }
 
 @Component({
@@ -21,37 +17,69 @@ interface Assessment {
   styleUrls: ['./student-assessments.css']
 })
 export class StudentAssessmentsComponent {
-
-  assessments: Assessment[] = [];
+  studentName: string;
+  studentInitials: string;
+  assessments: StudentAssessment[] = [];
 
   constructor(private authService: AuthService) {
+    this.studentName = this.authService.getName() || 'Student';
+    this.studentInitials = this.studentName
+      .split(/\s+/)
+      .map(part => part.charAt(0))
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
     const stored = localStorage.getItem('adminAssessments');
-    const adminList = stored ? JSON.parse(stored) : [];
+    const adminList = stored
+      ? JSON.parse(stored) as Assessment[]
+      : DEFAULT_ASSESSMENTS;
+    const username = this.authService.getUsername() || 'student';
 
-    if (adminList.length > 0) {
-      this.assessments = adminList.map((a: any) => ({
-        ...a,
-        submitted: false,
-        fileName: ''
-      }));
-    } else {
-      this.assessments = [
-        { id: 1, title: 'Angular Components Assignment', subject: 'Introduction to Angular', deadline: '2026-07-20', submitted: false, fileName: '', isUrgent: false },
-        { id: 2, title: 'Binary Trees Lab Report',       subject: 'Data Structures',         deadline: '2026-07-14', submitted: false, fileName: '', isUrgent: true  },
-        { id: 3, title: 'SQL Query Practice',            subject: 'Database Management',     deadline: '2026-07-25', submitted: false, fileName: '', isUrgent: false },
-      ];
-    }
+    this.assessments = adminList.map(assessment => {
+      const submissions = assessment.submissions ?? [];
+      const ownSubmission = submissions.find(item => item.username === username);
+
+      return {
+        ...assessment,
+        submissions,
+        submitted: !!ownSubmission,
+        fileName: ownSubmission?.fileName ?? ''
+      };
+    });
   }
 
-  onFileSelect(event: Event, assessment: Assessment): void {
+  onFileSelect(event: Event, assessment: StudentAssessment): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       assessment.fileName = input.files[0].name;
     }
   }
 
-  submit(assessment: Assessment): void {
-    if (!assessment.fileName) return;
+  submit(assessment: StudentAssessment): void {
+    if (!assessment.fileName || assessment.submitted) return;
+
+    const stored = localStorage.getItem('adminAssessments');
+    const adminList = stored
+      ? JSON.parse(stored) as Assessment[]
+      : DEFAULT_ASSESSMENTS.map(item => ({ ...item, submissions: [...item.submissions] }));
+    const record = adminList.find(item => item.id === assessment.id);
+    if (!record) return;
+    record.submissions ??= [];
+
+    const username = this.authService.getUsername() || 'student';
+    const existing = record.submissions.find(item => item.username === username);
+    if (existing) return;
+
+    const submission = {
+      username,
+      studentName: this.authService.getName() || 'Student',
+      fileName: assessment.fileName,
+      submittedAt: new Date().toISOString()
+    };
+
+    record.submissions.push(submission);
+    localStorage.setItem('adminAssessments', JSON.stringify(adminList));
+    assessment.submissions = record.submissions;
     assessment.submitted = true;
   }
 

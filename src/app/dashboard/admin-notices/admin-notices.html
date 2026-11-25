@@ -1,51 +1,104 @@
 <div class="dashboard-container">
-  <aside class="sidebar">
+  <aside class="sidebar admin-sidebar">
     <div class="logo-area"><h2>Admin</h2></div>
     <nav class="nav-links">
-      <a routerLink="/admin-dashboard">Dashboard</a>
-      <a routerLink="/admin/students">Manage Students</a>
-      <a routerLink="/admin/attendance">Manage Attendance</a>
-      <a routerLink="/admin/assessments">Manage Assessments</a>
-      <a routerLink="/admin/notices" class="active-link">Manage Notices</a>
-      <a routerLink="/admin/account">Account</a>
+      <a routerLink="/admin-dashboard"><span class="material-symbols-outlined" aria-hidden="true">dashboard</span>Dashboard</a>
+      <a routerLink="/admin/students"><span class="material-symbols-outlined" aria-hidden="true">group</span>Manage Students</a>
+      <a routerLink="/admin/attendance"><span class="material-symbols-outlined" aria-hidden="true">fact_check</span>Manage Attendance</a>
+      <a routerLink="/admin/assessments"><span class="material-symbols-outlined" aria-hidden="true">assignment</span>Manage Assessments</a>
+      <a routerLink="/admin/notices" class="active-link"><span class="material-symbols-outlined" aria-hidden="true">campaign</span>Manage Notices</a>
+      <a routerLink="/admin/account"><span class="material-symbols-outlined" aria-hidden="true">manage_accounts</span>Account</a>
     </nav>
+    <div class="sidebar-profile">
+      <div class="sidebar-avatar">AU</div>
+      <div class="sidebar-user-info"><strong>Admin User</strong><span>Administrator</span></div>
+      <button class="btn-logout" type="button" aria-label="Logout" routerLink="/login"></button>
+    </div>
   </aside>
 
   <main class="main-content">
-    <header class="top-header">
-      <div class="profile-info">
-        <button class="btn-logout" routerLink="/login">Logout</button>
-      </div>
-    </header>
-
     <div class="page-body">
-      <div class="page-title-row">
-        <h1>Manage Notices</h1>
-        <button class="btn-primary-action" (click)="showForm = !showForm">+ Post Notice</button>
-      </div>
-
-      <div class="notice-form card" *ngIf="showForm">
-        <textarea
-          [(ngModel)]="newNotice"
-          placeholder="Type your notice here..."
-          rows="4">
-        </textarea>
-        <div class="notice-form-actions">
-          <button class="btn-submit-notice" (click)="postNotice()">Post</button>
-          <button class="btn-cancel-notice" (click)="showForm = false; newNotice = ''">Cancel</button>
+      <header class="admin-page-header">
+        <div class="page-heading">
+          <h1>Manage Notices</h1>
+          <p>Broadcast campus announcements to students and departments</p>
         </div>
-      </div>
-
-      <div class="notices-list" *ngIf="notices.length > 0">
-        <div class="notice-card card" *ngFor="let notice of notices; let i = index">
-          <div class="notice-meta">{{ notice.date }}</div>
-          <p class="notice-text">{{ notice.text }}</p>
-          <button class="btn-delete-notice" (click)="deleteNotice(i)">Delete</button>
+        <div class="page-header-tools">
+          <label class="header-search">
+            <span class="material-symbols-outlined" aria-hidden="true">search</span>
+            <input type="search" [(ngModel)]="searchQuery" name="noticeSearch" placeholder="Search notices..." aria-label="Search notices">
+            <span class="material-symbols-outlined search-filter-icon" aria-hidden="true">tune</span>
+          </label>
+          <button class="header-icon-button" type="button" aria-label="Notifications">
+            <span class="material-symbols-outlined" aria-hidden="true">notifications</span>
+          </button>
+          <span class="header-avatar" aria-label="Admin User">AU</span>
         </div>
+      </header>
+
+      <div class="notice-toolbar">
+        <button class="btn-primary-action" type="button" (click)="openForm()">Post Notice</button>
       </div>
 
-      <div class="empty-state card" *ngIf="notices.length === 0 && !showForm">
-        <p>No notices posted yet. Click <strong>+ Post Notice</strong> to add one.</p>
+      <div class="notices-list" *ngIf="filteredNotices.length > 0">
+        <article class="notice-card card" *ngFor="let notice of filteredNotices">
+          <div class="notice-copy">
+            <div class="notice-heading">
+              <h2>{{ notice.title }}</h2>
+              <span class="notice-audience">{{ notice.audience }}</span>
+            </div>
+            <p class="notice-text">{{ notice.text }}</p>
+            <div class="notice-meta">Posted {{ notice.date }}</div>
+          </div>
+          <div class="notice-actions">
+            <button type="button" class="notice-action" aria-label="Edit notice" title="Edit notice" (click)="editNotice(notice)">
+              <span class="material-symbols-outlined" aria-hidden="true">edit</span>
+            </button>
+            <button type="button" class="notice-action delete" aria-label="Delete notice" title="Delete notice" (click)="deleteNotice(notice.id)">
+              <span class="material-symbols-outlined" aria-hidden="true">delete</span>
+            </button>
+          </div>
+        </article>
+      </div>
+
+      <div class="empty-state card" *ngIf="filteredNotices.length === 0">
+        <h2>{{ searchQuery ? 'No matching notices' : 'No notices posted yet' }}</h2>
+        <p>{{ searchQuery ? 'Try another search term.' : 'Share an important update with students and departments.' }}</p>
+      </div>
+
+      <div class="modal-backdrop" *ngIf="showForm">
+        <section class="modal notice-modal" role="dialog" aria-modal="true" aria-labelledby="notice-modal-title">
+          <header class="modal-header">
+            <h2 id="notice-modal-title">{{ editingNoticeId ? 'Edit Notice' : 'Post Notice' }}</h2>
+            <button type="button" class="modal-close" aria-label="Close" (click)="closeForm()">
+              <span class="material-symbols-outlined" aria-hidden="true">close</span>
+            </button>
+          </header>
+          <form (ngSubmit)="postNotice()">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="notice-title">Title</label>
+                <input id="notice-title" type="text" name="title" [(ngModel)]="newTitle" maxlength="120" required placeholder="e.g., Semester registration deadline">
+              </div>
+              <div class="form-group">
+                <label for="notice-message">Message</label>
+                <textarea id="notice-message" name="message" [(ngModel)]="newNotice" rows="4" maxlength="2000" required placeholder="Write the announcement details for students..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="notice-audience">Audience</label>
+                <select id="notice-audience" name="audience" [(ngModel)]="newAudience">
+                  <option>All Students</option>
+                  <option>All Departments</option>
+                </select>
+              </div>
+              <p class="field-error" role="alert" *ngIf="formError">{{ formError }}</p>
+            </div>
+            <footer class="modal-footer">
+              <button type="button" class="btn-cancel-notice" (click)="closeForm()">Cancel</button>
+              <button type="submit" class="btn-submit-notice">{{ editingNoticeId ? 'Save Changes' : 'Publish' }}</button>
+            </footer>
+          </form>
+        </section>
       </div>
     </div>
   </main>
