@@ -1,11 +1,13 @@
 <div class="page">
-
-  <div class="cyan-accent"></div>
-
   <div class="main-panel">
-
-    <!-- Left branding -->
     <div class="brand-section">
+      <div class="brand-mark" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+          <path d="m3 9 9-5 9 5-9 5-9-5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M7 11.2v4.3c2.8 2.2 7.2 2.2 10 0v-4.3M21 9v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <p class="brand-kicker">CAMPUS PORTAL</p>
       <div class="brand-text">
         <p class="brand-title">STUDENT MANAGEMENT</p>
         <p class="brand-subtitle">SYSTEM</p>
@@ -13,10 +15,7 @@
       <p class="brand-tagline">A centralized platform for managing student records, courses, and academic progress.</p>
     </div>
 
-    <!-- Right form -->
     <div class="form-section">
-
-      <!-- Top right admin toggle -->
       <div class="top-row">
         <p class="form-mode-label">
           <span *ngIf="isStudentLogin">Student Login</span>
@@ -29,11 +28,9 @@
         </button>
       </div>
 
-      <!-- Error / success banners -->
       <div class="error-banner" *ngIf="errorMessage">{{ errorMessage }}</div>
       <div class="success-banner" *ngIf="successMessage">{{ successMessage }}</div>
 
-      <!-- ── Login form ───────────────────────────────── -->
       <form *ngIf="!isSignup" [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
 
         <div class="field">
@@ -82,7 +79,6 @@
 
       </form>
 
-      <!-- ── Signup form ──────────────────────────────── -->
       <form *ngIf="isSignup" [formGroup]="signupForm" (ngSubmit)="onSignup()" novalidate>
 
         <div class="field">
@@ -126,7 +122,6 @@
 
       </form>
 
-      <!-- ── Bottom actions ──────────────────────────── -->
       <div class="bottom-actions">
         <button type="button" class="signup-toggle" *ngIf="!isAdminLogin" (click)="setMode(isSignup ? 'student-login' : 'signup')">
           <span *ngIf="!isSignup">New student? Sign Up</span>
@@ -134,7 +129,6 @@
         </button>
       </div>
 
-      <!-- Demo access -->
       <div class="demo-access" *ngIf="!isSignup">
         <p class="demo-label">Demo access</p>
         <div class="demo-row">
